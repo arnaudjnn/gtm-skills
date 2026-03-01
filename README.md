@@ -1,3 +1,5 @@
+<img width="432" height="187" alt="Frame 5 (1)" src="https://github.com/user-attachments/assets/0dcad243-9abd-40ed-998d-04b20fdefd06" />
+
 # GTM Skills
 
 A collection of skills for AI coding agents following the Agent Skills format. These skills enable AI agents to run GTM outbound email workflows using an MCP server (IMAP/SMTP + Mailpool).
