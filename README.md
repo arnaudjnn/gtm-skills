@@ -2,6 +2,8 @@
 
 # GTM Skills
 
+[![Install with npx skills](https://img.shields.io/badge/npx_skills-add_arnaudjnn/gtm--skills-blue?logo=npm)](https://skills.sh) [![Agent Skills](https://img.shields.io/badge/agent_skills-SKILL.md-8A2BE2)](https://skills.sh) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 A collection of skills for AI coding agents following the Agent Skills format. These skills enable AI agents to run GTM workflows using MCP servers — outbound email operations and buying signal detection.
 
 ## Available Skills
@@ -15,7 +17,7 @@ Buying signal detection. Scan company domains for Trustpilot review sentiment, s
 ## Installation
 
 ```bash
-npx skills add gtm-skills
+npx skills add arnaudjnn/gtm-skills
 ```
 
 ## Usage
