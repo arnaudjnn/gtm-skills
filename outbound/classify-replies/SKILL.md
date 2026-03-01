@@ -46,6 +46,11 @@ Automatically classify incoming reply emails by sentiment and tag them with the 
 7. **Print summary**
    - Output a table showing: account, total classified, and count per category
 
+## Auto vs Manual Classification
+
+- **Auto**: If `ANTHROPIC_API_KEY` is set on the outbound-tools server, replies are classified automatically via `GET /api/classify`. Set up a Railway cron or external scheduler to hit the endpoint periodically.
+- **Manual**: If `ANTHROPIC_API_KEY` is not set, use this agent skill to classify replies on demand.
+
 ## Classification Guidelines
 
 - **interested**: Contains positive language, asks questions, requests a meeting/call, engages with the offer

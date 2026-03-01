@@ -27,28 +27,11 @@ Outbound email workflows and buying signal detection, powered by MCP servers.
 
 ### Outbound Tools
 
-The outbound-tools server must be running before using outbound sub-skills. Deploy to Railway:
+The outbound-tools server must be running before using outbound sub-skills. Deploy to Railway using the one-click template:
 
-```bash
-# 1. Install Railway CLI
-npm i -g @railway/cli
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/outbound-tools)
 
-# 2. Authenticate
-railway login
-railway whoami
-
-# 3. Initialize project (run from the outbound-tools directory)
-railway init
-
-# 4. Set required environment variables
-railway variables set MAILPOOL_API_KEY=<your-mailpool-api-key>
-
-# 5. Deploy
-railway up
-
-# 6. Get your public URL
-railway domain
-```
+Set `MAILPOOL_API_KEY` during deployment. Optionally set `ANTHROPIC_API_KEY` to enable auto-classification via `/api/classify`.
 
 Store the Railway URL — you'll configure it as your MCP server endpoint.
 
