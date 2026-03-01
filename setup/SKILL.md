@@ -65,7 +65,7 @@ Iterate over the collected dependency IDs. For each one, look up its **Type** in
 1. **Check Railway CLI**: Run `railway version`. If not installed, guide the user to install it (`brew install railway` on macOS, or `npm i -g @railway/cli`).
 2. **Authenticate**: Run `railway whoami`. If not logged in, run `railway login` and wait for auth to complete.
 3. **List workspaces**: Run `railway whoami` to see the current workspace. If the user has multiple workspaces, ask which one to use.
-4. **Deploy from template**: Direct the user to the Railway one-click deploy link for the dependency, or use `railway deploy` if a template URL is available.
+4. **Deploy from template**: Run `railway init --template outbound-tools` to create the project from the template directly via CLI.
 5. **Set environment variables**: Iterate over the **Env Vars per Dependency** table for this dependency ID:
    - `Ask user` → prompt the user for the value
    - `Auto-generate` → generate a random 32-character hex string
