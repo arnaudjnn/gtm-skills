@@ -31,7 +31,7 @@ Run a full buying signal scan on a company domain with a single MCP tool call. T
 
 | Signal | Detection | Data Source |
 |--------|-----------|-------------|
-| `signal_socials_spike` | Follower spike on Instagram/TikTok | SocialBlade |
+| `signal_socials_spike` | Follower spike on Instagram/TikTok | Instagram/TikTok |
 | `signal_trustpilot_negative_support_reviews` | 1-star reviews mentioning "support" | Trustpilot |
 | `signal_hiring_role` | CX/customer support hiring | LinkedIn |
 

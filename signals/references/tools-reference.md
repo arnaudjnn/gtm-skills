@@ -111,7 +111,7 @@ All Trustpilot tools return reviews with this structure:
 
 ## signal_socials_spike
 
-Detects significant follower spikes on Instagram and/or TikTok over a 14-day window via SocialBlade.
+Detects significant follower spikes on Instagram and/or TikTok over a 14-day window.
 
 **Cost:** 5 tokens
 

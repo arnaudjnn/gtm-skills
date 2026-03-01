@@ -11,7 +11,7 @@ Detect buying signals for a target company using its domain. All operations use 
 
 - **Input**: a company domain string (e.g. `"gymshark.com"`)
 - **Output**: triggered signals array with detection results
-- **Data sources**: Trustpilot (reviews), SocialBlade (Instagram/TikTok follower stats), LinkedIn (job listings)
+- **Data sources**: Trustpilot (reviews), Instagram/TikTok (follower stats), LinkedIn (job listings)
 - **Token costs**: 5 tokens per individual signal tool, 15 tokens for `detect_signal` (runs 3 checks)
 
 ## MCP Tools Available
@@ -27,7 +27,7 @@ See `references/tools-reference.md` for full parameter details on all 6 tools.
 - `signal_trustpilot_positive_reviews` — 4-5 star reviews in the last 30 days. 5 tokens.
 
 ### Social Growth
-- `signal_socials_spike` — Follower spikes on Instagram/TikTok over 14 days via SocialBlade. 5 tokens.
+- `signal_socials_spike` — Follower spikes on Instagram/TikTok over 14 days. 5 tokens.
 
 ### Hiring
 - `signal_hiring_role` — LinkedIn job listings matching a title filter. 5 tokens.

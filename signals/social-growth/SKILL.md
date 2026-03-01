@@ -1,22 +1,22 @@
 ---
 name: social-growth
-description: Detect social media follower spikes on Instagram and TikTok for a company. Uses SocialBlade data over a 14-day window to flag unusual growth patterns.
+description: Detect social media follower spikes on Instagram and TikTok for a company. Analyzes a 14-day window to flag unusual growth patterns.
 ---
 
 # Social Growth Detection
 
-Detect significant follower spikes or drops on Instagram and TikTok for a company using SocialBlade data. Use this skill when you need detailed social growth analysis beyond what `detect-all` provides.
+Detect significant follower spikes or drops on Instagram and TikTok for a company. Use this skill when you need detailed social growth analysis beyond what `detect-all` provides.
 
 ## MCP Tools Used
 
-- `signal_socials_spike` (5 tokens) — 14 days of daily follower stats from SocialBlade
+- `signal_socials_spike` (5 tokens) — 14 days of daily follower stats
 
 ## Workflow
 
 1. **Call `signal_socials_spike`**
    - Pass the target `domain` (e.g. `"gymshark.com"`)
    - The tool finds the company's Instagram and/or TikTok profiles from their website
-   - Fetches 14 days of daily stats from SocialBlade
+   - Fetches 14 days of daily follower stats
 
 2. **Interpret the results**
    - `spike_detected`: whether any threshold was met
