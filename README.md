@@ -2,27 +2,15 @@
 
 # GTM Skills
 
-A collection of skills for AI coding agents following the Agent Skills format. These skills enable AI agents to run GTM outbound email workflows using an MCP server (IMAP/SMTP + Mailpool).
+A collection of skills for AI coding agents following the Agent Skills format. These skills enable AI agents to run GTM workflows using MCP servers — outbound email operations and buying signal detection.
 
 ## Available Skills
 
 ### [`outbound`](./outbound)
-Core outbound email operations. Send emails, read inbox/sent, tag messages, and manage audience segments via MCP tools. Use for cold email outreach and contact management.
+Outbound email workflows. Send campaigns, classify replies, follow up with non-responders, clean bounced contacts, and generate analytics reports. Powered by the outbound-tools MCP server (IMAP/SMTP + Mailpool).
 
-### [`classify-replies`](./outbound/classify-replies)
-Classify received reply emails by sentiment and tag them. Categories: interested, complained, out-of-office, unsubscribed, bounced. Tags both reply and original sent email.
-
-### [`send-campaign`](./outbound/send-campaign)
-Send outbound email campaigns to audience segments. Handles account rotation, rate limiting, and deliverability best practices.
-
-### [`follow-up`](./outbound/follow-up)
-Send follow-up emails to prospects who haven't replied. Identifies unreplied sent emails and sends contextual follow-ups for multi-touch outreach sequences.
-
-### [`clean-bounces`](./outbound/clean-bounces)
-Remove bounced and complained contacts from audience segments. Keeps lists clean and protects sender reputation.
-
-### [`analytics`](./outbound/analytics)
-Generate email campaign analytics and performance reports. Track bounce, complaint, and interest rates across accounts.
+### [`signals`](./signals)
+Buying signal detection. Scan company domains for Trustpilot review sentiment, social media follower spikes (Instagram/TikTok), and LinkedIn hiring activity. Powered by the signals-tools MCP server (gtm-engine.sh).
 
 ## Installation
 
@@ -39,13 +27,18 @@ Skills are automatically activated when relevant tasks are detected. Example pro
 - "Follow up with prospects who haven't replied in 5 days"
 - "Clean bounced contacts from all audiences"
 - "Generate a campaign performance report"
+- "Scan acme.com for buying signals"
+- "What's the Trustpilot sentiment for gymshark.com?"
+- "Is notion.so hiring CX reps?"
+- "Check Instagram growth for newbrand.com"
 
 ## Prerequisites
 
-- An MCP server (outbound-tools) deployed on Railway
+- An MCP server (outbound-tools) deployed on Railway for outbound skills
 - Mailpool API key stored as `MAILPOOL_API_KEY` environment variable
+- An API key for gtm-engine.sh for signal skills — see the [signals skill](./signals) for setup
 
-See the root [SKILL.md](./SKILL.md) for Railway deployment instructions.
+See the root [SKILL.md](./SKILL.md) for deployment instructions.
 
 ## License
 
