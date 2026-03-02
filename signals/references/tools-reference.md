@@ -1,6 +1,33 @@
-# MCP Tools Reference
+# Signals Tools API Reference
 
-Complete reference for all 6 MCP tools provided by the signals-tools server.
+Complete reference for all 6 tools provided by the signals-tools server.
+
+---
+
+## How to Call Tools
+
+Use the Bash tool to run curl commands. Every call follows this pattern:
+
+```bash
+curl -s -X POST "$SIGNALS_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"TOOL_NAME","arguments":{...}},"id":1}'
+```
+
+- `$SIGNALS_TOOLS_URL`:the server endpoint, defaults to `https://gtm-engine.sh/mcp` (set during setup)
+- `$SIGNALS_API_KEY`:the API key for authentication (set during setup)
+- The response JSON contains the result in `result.content[0].text` (parse with `jq`)
+
+### Tip: parse responses with jq
+
+```bash
+curl -s -X POST "$SIGNALS_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"detect_signal","arguments":{"domain":"gymshark.com"}},"id":1}' \
+  | jq -r '.result.content[0].text' | jq .
+```
 
 ---
 
@@ -9,6 +36,18 @@ Complete reference for all 6 MCP tools provided by the signals-tools server.
 Runs multiple signal detections for a company domain and returns only the ones that triggered. Checks: `signal_socials_spike`, `signal_trustpilot_negative_support_reviews`, `signal_hiring_role` (CX filter hardcoded).
 
 **Cost:** 15 tokens
+
+```bash
+curl -s -X POST "$SIGNALS_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"detect_signal",
+      "arguments":{"domain":"gymshark.com"}
+    },"id":1
+  }'
+```
 
 **Parameters:**
 | Name | Type | Required | Description |
@@ -41,6 +80,18 @@ Detects negative Trustpilot reviews for a company in the last 30 days. A review 
 
 **Cost:** 5 tokens
 
+```bash
+curl -s -X POST "$SIGNALS_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"signal_trustpilot_negative_reviews",
+      "arguments":{"domain":"gymshark.com"}
+    },"id":1
+  }'
+```
+
 **Parameters:**
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
@@ -63,6 +114,18 @@ Detects negative Trustpilot reviews that mention customer support. Same as `sign
 
 **Cost:** 5 tokens
 
+```bash
+curl -s -X POST "$SIGNALS_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"signal_trustpilot_negative_support_reviews",
+      "arguments":{"domain":"gymshark.com"}
+    },"id":1
+  }'
+```
+
 **Parameters:**
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
@@ -77,6 +140,18 @@ Detects negative Trustpilot reviews that mention customer support. Same as `sign
 Detects positive Trustpilot reviews for a company in the last 30 days. A review is positive if its rating is 4 or 5 (out of 5).
 
 **Cost:** 5 tokens
+
+```bash
+curl -s -X POST "$SIGNALS_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"signal_trustpilot_positive_reviews",
+      "arguments":{"domain":"gymshark.com"}
+    },"id":1
+  }'
+```
 
 **Parameters:**
 | Name | Type | Required | Description |
@@ -114,6 +189,18 @@ All Trustpilot tools return reviews with this structure:
 Detects significant follower spikes on Instagram and/or TikTok over a 14-day window.
 
 **Cost:** 5 tokens
+
+```bash
+curl -s -X POST "$SIGNALS_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"signal_socials_spike",
+      "arguments":{"domain":"gymshark.com"}
+    },"id":1
+  }'
+```
 
 **Parameters:**
 | Name | Type | Required | Description |
@@ -158,6 +245,21 @@ Detects whether a company is hiring for roles matching given job title filters v
 
 **Cost:** 5 tokens
 
+```bash
+curl -s -X POST "$SIGNALS_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"signal_hiring_role",
+      "arguments":{
+        "domain":"gymshark.com",
+        "job_title_filters":"(cx OR customer support) NOT junior"
+      }
+    },"id":1
+  }'
+```
+
 **Parameters:**
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
@@ -165,8 +267,8 @@ Detects whether a company is hiring for roles matching given job title filters v
 | job_title_filters | string | yes | Filter for job titles with OR and NOT operators (e.g. `"(cx OR customer support) NOT junior"`) |
 
 **Filter syntax:**
-- `OR` — match any of the terms: `"cx OR customer support"`
-- `NOT` — exclude matches: `"NOT junior"`
+- `OR`:match any of the terms: `"cx OR customer support"`
+- `NOT`:exclude matches: `"NOT junior"`
 - Parentheses for grouping: `"(cx OR customer support) NOT junior"`
 - Case-insensitive matching
 

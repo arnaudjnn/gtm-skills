@@ -5,7 +5,7 @@ description: Remove bounced and complained contacts from audience segments. Keep
 
 # Clean Bounces
 
-Remove bounced, complained, and unsubscribed contacts from audience segments. Protects sender reputation and keeps lists deliverable.
+Remove bounced, complained, and unsubscribed contacts from audience segments. Protects sender reputation and keeps lists deliverable. See `references/tools-reference.md` for exact commands.
 
 ## Workflow
 
@@ -30,16 +30,16 @@ Remove bounced, complained, and unsubscribed contacts from audience segments. Pr
    - Check that bounce rate is below 2% and complaint rate is below 0.1%
 
 6. **Alert on high rates**
-   - If bounce rate > 2%: flag the account — may need to pause sending
-   - If complaint rate > 0.1%: flag the account — immediate action needed
+   - If bounce rate > 2%: flag the account:may need to pause sending
+   - If complaint rate > 0.1%: flag the account:immediate action needed
    - Output a summary table with rates per account and flagged accounts
 
 ## When to Run
 
-- **After classify-replies** — once replies are tagged, clean bounces removes bad contacts
-- **Before send-campaign** — ensure lists are clean before sending
-- **When bounce rate exceeds 2%** — immediate cleanup needed
-- **Weekly maintenance** — regular hygiene keeps deliverability high
+- **After classify-replies**:once replies are tagged, clean bounces removes bad contacts
+- **Before send-campaign**:ensure lists are clean before sending
+- **When bounce rate exceeds 2%**:immediate cleanup needed
+- **Weekly maintenance**:regular hygiene keeps deliverability high
 
 ## Rate Thresholds
 

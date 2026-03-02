@@ -2,17 +2,17 @@
 
 **Skill under test:** `signals` (and all sub-skills)
 **Skill type:** Reference + Technique
-**Test approach:** Retrieval and application scenarios — does the agent route correctly, use the right MCP tools, and follow workflows?
+**Test approach:** Retrieval and application scenarios:does the agent route correctly, use the right tools, and follow workflows?
 
 ## Setup
 
 ```
-[Test scaffold] For each scenario below, commit to a specific answer with exact MCP tool calls and parameters. You have access to all 6 MCP tools from the signals-tools server.
+[Test scaffold] For each scenario below, commit to a specific answer with exact tool calls and parameters. You have access to all 6 tools from the signals-tools server.
 ```
 
 ---
 
-## Scenario 1: Router — Detect-All vs Specific Sub-Skill
+## Scenario 1: Router:Detect-All vs Specific Sub-Skill
 
 **Tests:** Correct routing between detect-all and targeted sub-skills
 
@@ -22,8 +22,8 @@ Case B: "What are the Trustpilot reviews like for acme.com?"
 ```
 
 **Expected:**
-- Case A: Uses `detect-all` — single `detect_signal` call, returns triggered signals array
-- Case B: Uses `reputation` — runs all 3 Trustpilot tools for a full sentiment breakdown
+- Case A: Uses `detect-all`:single `detect_signal` call, returns triggered signals array
+- Case B: Uses `reputation`:runs all 3 Trustpilot tools for a full sentiment breakdown
 
 **Failure indicators:**
 - Uses 3 individual tools when detect-all was appropriate
@@ -31,7 +31,7 @@ Case B: "What are the Trustpilot reviews like for acme.com?"
 
 ---
 
-## Scenario 2: Detect-All — Interpreting Results
+## Scenario 2: Detect-All:Interpreting Results
 
 **Tests:** Correct interpretation of detect_signal output
 
@@ -55,7 +55,7 @@ detect_signal for "gymshark.com" returns:
 
 ---
 
-## Scenario 3: Reputation — Full Analysis
+## Scenario 3: Reputation:Full Analysis
 
 **Tests:** Running all 3 Trustpilot tools and analyzing sentiment
 
@@ -80,7 +80,7 @@ signal_trustpilot_positive_reviews returns: is_detected: true, positive_reviews_
 
 ---
 
-## Scenario 4: Social Spike — Interpreting Thresholds
+## Scenario 4: Social Spike:Interpreting Thresholds
 
 **Tests:** Understanding spike detection logic
 
@@ -101,12 +101,12 @@ signal_socials_spike for "newbrand.com" returns:
 - Notes this was Instagram only (no TikTok data)
 
 **Failure indicators:**
-- Claims 3.2% overall growth triggered the spike (it didn't — it was the single-day threshold)
+- Claims 3.2% overall growth triggered the spike (it didn't:it was the single-day threshold)
 - Ignores the spike_reason explanation
 
 ---
 
-## Scenario 5: Hiring — Filter Syntax
+## Scenario 5: Hiring:Filter Syntax
 
 **Tests:** Correct job_title_filters construction
 
@@ -146,7 +146,7 @@ signal_socials_spike for "newbrand.com" returns:
 
 ---
 
-## Scenario 7: Batch Scanning — Multiple Domains
+## Scenario 7: Batch Scanning:Multiple Domains
 
 **Tests:** Handling a list of domains efficiently
 

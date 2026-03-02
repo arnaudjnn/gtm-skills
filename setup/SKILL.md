@@ -1,20 +1,20 @@
 ---
 name: setup
-description: Interactive setup wizard for deploying MCP server dependencies and configuring API keys for GTM skills.
+description: Interactive setup wizard for deploying server dependencies and configuring environment variables for GTM skills.
 ---
 
 # Setup Wizard
 
-Interactive, table-driven setup for GTM skills. Guides the user through selecting skill groups, deploying dependencies, and configuring MCP servers.
+Interactive, table-driven setup for GTM skills. Guides the user through selecting skill groups, deploying dependencies, and configuring environment variables for API calls.
 
 ## Dependency Registry
 
-One row per MCP server dependency. This table is the source of truth for what needs to be deployed.
+One row per server dependency. This table is the source of truth for what needs to be deployed.
 
 | ID | Name | Required By | Type | Endpoint |
 |----|------|-------------|------|----------|
 | `outbound-tools` | Outbound Tools | outbound, classify-replies, send-campaign, follow-up, clean-bounces, analytics | `railway-template` | User's Railway URL |
-| `signals-tools` | Signals Tools | signals, detect-all, reputation, social-growth, hiring | `hosted-api-key` | `https://gtm-engine.sh` |
+| `signals-tools` | Signals Tools | signals, detect-all, reputation, social-growth, hiring | `hosted-api-key` | `https://gtm-engine.sh/mcp` |
 
 ## Env Vars per Dependency
 
@@ -23,7 +23,7 @@ One row per MCP server dependency. This table is the source of truth for what ne
 | `outbound-tools` | `MAILPOOL_API_KEY` | Ask user | Yes |
 | `outbound-tools` | `API_KEY` | Auto-generate (random 32-char hex) | Yes |
 | `outbound-tools` | `ANTHROPIC_API_KEY` | Ask user | No |
-| `signals-tools` | `API_KEY` | Call `get_api_key` tool or ask user | Yes |
+| `signals-tools` | `SIGNALS_API_KEY` | Ask user | Yes |
 
 ## Skill Group Mapping
 
@@ -43,14 +43,14 @@ One row per MCP server dependency. This table is the source of truth for what ne
 
 ## Flow
 
-Execute these 5 steps in order. Use the tables above to drive each step generically — do not hard-code dependency-specific logic.
+Execute these 5 steps in order. Use the tables above to drive each step generically:do not hard-code dependency-specific logic.
 
 ### Step 1: Ask Which Skill Groups
 
 Present the user with a choice:
-- **Outbound** — cold email workflows (campaigns, replies, follow-ups, bounces, analytics)
-- **Signals** — buying signal detection (reviews, social growth, hiring)
-- **Both** — full GTM stack
+- **Outbound**:cold email workflows (campaigns, replies, follow-ups, bounces, analytics)
+- **Signals**:buying signal detection (reviews, social growth, hiring)
+- **Both**:full GTM stack
 
 ### Step 2: Resolve Dependencies
 
@@ -74,28 +74,50 @@ Iterate over the collected dependency IDs. For each one, look up its **Type** in
 
 #### Hosted API Key Procedure
 
-1. **Connect to the MCP server**: Add a temporary MCP server entry for the dependency's endpoint.
-2. **Get API key**: Call the `get_api_key` tool on the server. If the tool is unavailable or the user already has a key, ask them to provide it.
-3. **Store the key** for use in Step 4.
+1. **Ask the user for their API key**: Prompt them to provide their signals API key.
+2. **Store the key** for use in Step 4.
 
-### Step 4: Configure MCP Servers
+### Step 4: Configure Environment Variables
 
-For each deployed dependency:
+For each deployed dependency, export the required environment variables so they persist for tool calls.
 
-1. Read the user's Claude MCP config (e.g., `~/.claude.json` or the project's `.mcp.json`).
-2. Add or update the MCP server entry:
-   - **URL**: the endpoint from Step 3 (Railway URL or hosted endpoint)
-   - **Headers**: `Authorization: Bearer <API_KEY>` using the key from Step 3
-3. Write the config back.
+**For outbound-tools:**
+```bash
+export OUTBOUND_TOOLS_URL="https://<railway-domain>/mcp"
+export OUTBOUND_API_KEY="<the API_KEY from Step 3>"
+```
+
+**For signals-tools:**
+```bash
+export SIGNALS_TOOLS_URL="https://gtm-engine.sh/mcp"
+export SIGNALS_API_KEY="<the key from Step 3>"
+```
+
+Write these exports to the user's shell profile (`~/.zshrc`, `~/.bashrc`, or `~/.profile`) so they persist across sessions. Ask the user which file to use, or detect their shell.
+
+Also add them to the project's `.env` file if one exists.
 
 ### Step 5: Verify
 
 Smoke-test each configured server:
 
-| Dependency ID | Test Action | Expected |
-|---------------|-------------|----------|
-| `outbound-tools` | Call `list_email_accounts` | Returns a list (even if empty) |
-| `signals-tools` | Call `detect_signal` with a test domain | Returns signal data |
+**For outbound-tools:**
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"list_email_accounts","arguments":{}},"id":1}' \
+  | jq -r '.result.content[0].text'
+```
+
+**For signals-tools:**
+```bash
+curl -s -X POST "$SIGNALS_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"detect_signal","arguments":{"domain":"gymshark.com"}},"id":1}' \
+  | jq -r '.result.content[0].text'
+```
 
 Present a summary table to the user:
 
@@ -115,4 +137,4 @@ To add a new dependency:
 3. **Add a row** to the **Skill Group Mapping** table (or create a new skill group).
 4. **If the type is new**, add a row to the **Dependency Type Reference** table and write a new procedure section below Step 3.
 
-No changes to the flow logic are needed — the 5-step process iterates over the tables generically.
+No changes to the flow logic are needed:the 5-step process iterates over the tables generically.

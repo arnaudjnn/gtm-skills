@@ -7,9 +7,11 @@ description: Detect social media follower spikes on Instagram and TikTok for a c
 
 Detect significant follower spikes or drops on Instagram and TikTok for a company. Use this skill when you need detailed social growth analysis beyond what `detect-all` provides.
 
-## MCP Tools Used
+## Tools Used
 
-- `signal_socials_spike` (5 tokens) — 14 days of daily follower stats
+- `signal_socials_spike` (5 tokens):14 days of daily follower stats
+
+See `references/tools-reference.md` for the exact command.
 
 ## Workflow
 
@@ -27,7 +29,7 @@ Detect significant follower spikes or drops on Instagram and TikTok for a compan
 3. **Analyze the history data**
    - Look at `followers_gained` per day to identify the spike day(s)
    - Compare to `followers_total` to gauge relative significance
-   - Check both platforms if available — a spike on one may not appear on the other
+   - Check both platforms if available:a spike on one may not appear on the other
 
 4. **Output a growth summary**
    - Whether a spike was detected and why

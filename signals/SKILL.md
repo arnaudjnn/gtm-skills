@@ -1,11 +1,11 @@
 ---
 name: signals
-description: Detect buying signals for a company domain via MCP tools. Scans Trustpilot reviews, social media follower spikes, and LinkedIn hiring activity. Use sub-skills for targeted detection or detect-all for a full scan.
+description: Detect buying signals for a company domain via API calls. Scans Trustpilot reviews, social media follower spikes, and LinkedIn hiring activity. Use sub-skills for targeted detection or detect-all for a full scan.
 ---
 
 # Buying Signals Detection
 
-Detect buying signals for a target company using its domain. All operations use MCP tools from the signals-tools server (gtm-engine.sh).
+Detect buying signals for a target company using its domain. All operations use the signals-tools server via **Bash** (gtm-engine.sh).
 
 ## Architecture
 
@@ -14,23 +14,38 @@ Detect buying signals for a target company using its domain. All operations use 
 - **Data sources**: Trustpilot (reviews), Instagram/TikTok (follower stats), LinkedIn (job listings)
 - **Token costs**: 5 tokens per individual signal tool, 15 tokens for `detect_signal` (runs 3 checks)
 
-## MCP Tools Available
+## How to Call Tools
 
-See `references/tools-reference.md` for full parameter details on all 6 tools.
+Use the Bash tool to call the API. See `references/tools-reference.md` for the exact command for each tool.
+
+**Pattern:**
+```bash
+curl -s -X POST "$SIGNALS_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"TOOL_NAME","arguments":{...}},"id":1}' \
+  | jq -r '.result.content[0].text' | jq .
+```
+
+Environment variables `SIGNALS_TOOLS_URL` (defaults to `https://gtm-engine.sh/mcp`) and `SIGNALS_API_KEY` must be set (see `setup` skill).
+
+## Available Tools
+
+See `references/tools-reference.md` for full commands and parameter details on all 6 tools.
 
 ### Meta
-- `detect_signal` — Run all signal detections at once (socials spike + negative support reviews + CX hiring). 15 tokens.
+- `detect_signal`:Run all signal detections at once (socials spike + negative support reviews + CX hiring). 15 tokens.
 
 ### Reputation (Trustpilot)
-- `signal_trustpilot_negative_reviews` — 1-star reviews in the last 30 days. 5 tokens.
-- `signal_trustpilot_negative_support_reviews` — 1-star reviews mentioning "support" in the last 30 days. 5 tokens.
-- `signal_trustpilot_positive_reviews` — 4-5 star reviews in the last 30 days. 5 tokens.
+- `signal_trustpilot_negative_reviews`:1-star reviews in the last 30 days. 5 tokens.
+- `signal_trustpilot_negative_support_reviews`:1-star reviews mentioning "support" in the last 30 days. 5 tokens.
+- `signal_trustpilot_positive_reviews`:4-5 star reviews in the last 30 days. 5 tokens.
 
 ### Social Growth
-- `signal_socials_spike` — Follower spikes on Instagram/TikTok over 14 days. 5 tokens.
+- `signal_socials_spike`:Follower spikes on Instagram/TikTok over 14 days. 5 tokens.
 
 ### Hiring
-- `signal_hiring_role` — LinkedIn job listings matching a title filter. 5 tokens.
+- `signal_hiring_role`:LinkedIn job listings matching a title filter. 5 tokens.
 
 ## Sub-Skills
 

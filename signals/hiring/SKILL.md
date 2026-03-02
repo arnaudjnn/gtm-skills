@@ -5,11 +5,13 @@ description: Detect if a company is hiring for specific roles via LinkedIn job l
 
 # Hiring Detection
 
-Detect whether a company is hiring for specific roles by searching their LinkedIn job listings. Use this skill when you need custom job title filters — `detect-all` only checks for CX roles.
+Detect whether a company is hiring for specific roles by searching their LinkedIn job listings. Use this skill when you need custom job title filters:`detect-all` only checks for CX roles.
 
-## MCP Tools Used
+## Tools Used
 
-- `signal_hiring_role` (5 tokens) — LinkedIn job listings filtered by title
+- `signal_hiring_role` (5 tokens):LinkedIn job listings filtered by title
+
+See `references/tools-reference.md` for the exact command.
 
 ## Workflow
 

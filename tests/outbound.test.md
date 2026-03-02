@@ -2,17 +2,17 @@
 
 **Skill under test:** `outbound` (and all sub-skills)
 **Skill type:** Reference + Technique
-**Test approach:** Retrieval and application scenarios — does the agent route correctly, use the right MCP tools, and follow workflows?
+**Test approach:** Retrieval and application scenarios:does the agent route correctly, use the right tools, and follow workflows?
 
 ## Setup
 
 ```
-[Test scaffold] For each scenario below, commit to a specific answer with exact MCP tool calls and parameters. You have access to all 12 MCP tools from the outbound-tools server.
+[Test scaffold] For each scenario below, commit to a specific answer with exact tool calls and parameters. You have access to all 12 tools from the outbound-tools server.
 ```
 
 ---
 
-## Scenario 1: Router — Simple Send vs Campaign
+## Scenario 1: Router:Simple Send vs Campaign
 
 **Tests:** Correct routing between outbound and send-campaign
 
@@ -22,8 +22,8 @@ Case B: "Send our new product announcement to everyone in the leads segment."
 ```
 
 **Expected:**
-- Case A: Uses `outbound` — single `send_email` call, no campaign logic needed
-- Case B: Uses `send-campaign` — audience lookup, exclusion checks, account rotation
+- Case A: Uses `outbound`:single `send_email` call, no campaign logic needed
+- Case B: Uses `send-campaign`:audience lookup, exclusion checks, account rotation
 
 **Failure indicators:**
 - Uses send-campaign for a single email
@@ -70,7 +70,7 @@ What tag_filter do you use with list_sent_emails?
 
 ---
 
-## Scenario 4: Classify — Clear Interest + Tagging Both Sides
+## Scenario 4: Classify:Clear Interest + Tagging Both Sides
 
 **Tests:** Correct classification and dual tagging
 
@@ -96,7 +96,7 @@ Original sent email UID: 101 (SENT). Account: alice@acme.com.
 
 ---
 
-## Scenario 5: Classify — Ambiguous OOO With Interest
+## Scenario 5: Classify:Ambiguous OOO With Interest
 
 **Tests:** Correct priority when categories overlap
 
@@ -104,10 +104,10 @@ Original sent email UID: 101 (SENT). Account: alice@acme.com.
 Reply from carol@bigcorp.com (UID 60, INBOX):
 Subject: Out of Office Re: Partnership Opportunity
 Body: "I'm out of the office until March 15th. This looks really interesting
-though — please reach out again after I'm back!"
+though:please reach out again after I'm back!"
 ```
 
-**Expected:** Classification: `out-of-office` (OOO takes precedence — it's an auto-reply).
+**Expected:** Classification: `out-of-office` (OOO takes precedence:it's an auto-reply).
 
 **Failure indicators:**
 - Classifies as `interested` (the OOO nature takes precedence)
@@ -115,7 +115,7 @@ though — please reach out again after I'm back!"
 
 ---
 
-## Scenario 6: Campaign — Pre-Send Exclusions
+## Scenario 6: Campaign:Pre-Send Exclusions
 
 **Tests:** Filtering out bad contacts before sending
 
@@ -135,7 +135,7 @@ What checks do you run before sending?
 
 ---
 
-## Scenario 7: Campaign — Mid-Send Bounce Spike
+## Scenario 7: Campaign:Mid-Send Bounce Spike
 
 **Tests:** Reacting to unhealthy metrics during a campaign
 
@@ -156,7 +156,7 @@ What do you do?
 
 ---
 
-## Scenario 8: Follow-Up — Identifying Unreplied Prospects
+## Scenario 8: Follow-Up:Identifying Unreplied Prospects
 
 **Tests:** Correct workflow for finding who to follow up with
 
@@ -179,7 +179,7 @@ Walk through how you identify prospects who need a follow-up.
 
 ---
 
-## Scenario 9: Clean Bounces — End-to-End
+## Scenario 9: Clean Bounces:End-to-End
 
 **Tests:** Correct cleanup workflow
 
@@ -200,7 +200,7 @@ Walk through how you clean the audience lists.
 
 ---
 
-## Scenario 10: Analytics — Multi-Account Report
+## Scenario 10: Analytics:Multi-Account Report
 
 **Tests:** Correct aggregation across accounts
 

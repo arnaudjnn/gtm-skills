@@ -4,15 +4,15 @@
 
 [![Install with npx skills](https://img.shields.io/badge/npx_skills-add_arnaudjnn/gtm--skills-blue?logo=npm)](https://skills.sh) [![Agent Skills](https://img.shields.io/badge/agent_skills-SKILL.md-8A2BE2)](https://skills.sh) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-A collection of skills for AI coding agents following the Agent Skills format. These skills enable AI agents to run GTM workflows using MCP servers — outbound email operations and buying signal detection.
+A collection of skills for AI coding agents following the Agent Skills format. These skills enable AI agents to run GTM workflows via Bash: outbound email operations and buying signal detection.
 
 ## Available Skills
 
 ### [`outbound`](./outbound)
-Outbound email workflows. Send campaigns, classify replies, follow up with non-responders, clean bounced contacts, and generate analytics reports. Powered by the outbound-tools MCP server (IMAP/SMTP + Mailpool).
+Outbound email workflows. Send campaigns, classify replies, follow up with non-responders, clean bounced contacts, and generate analytics reports. Powered by the outbound-tools server (IMAP/SMTP + Mailpool).
 
 ### [`signals`](./signals)
-Buying signal detection. Scan company domains for Trustpilot review sentiment, social media follower spikes (Instagram/TikTok), and LinkedIn hiring activity. Powered by the signals-tools MCP server (gtm-engine.sh).
+Buying signal detection. Scan company domains for Trustpilot review sentiment, social media follower spikes (Instagram/TikTok), and LinkedIn hiring activity. Powered by the signals-tools server (gtm-engine.sh).
 
 ## Installation
 
@@ -36,9 +36,9 @@ Skills are automatically activated when relevant tasks are detected. Example pro
 
 ## Prerequisites
 
-- An MCP server (outbound-tools) deployed on Railway for outbound skills
+- The outbound-tools server deployed on Railway for outbound skills
 - Mailpool API key stored as `MAILPOOL_API_KEY` environment variable
-- An API key for gtm-engine.sh for signal skills — see the [signals skill](./signals) for setup
+- An API key for gtm-engine.sh for signal skills (see the [signals skill](./signals) for setup)
 
 See the root [SKILL.md](./SKILL.md) for deployment instructions.
 

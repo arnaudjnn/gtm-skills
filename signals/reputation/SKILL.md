@@ -5,18 +5,20 @@ description: Analyze Trustpilot review sentiment for a company. Run negative, po
 
 # Reputation Analysis
 
-Analyze a company's Trustpilot review sentiment using three specialized MCP tools. Use this skill when you need a detailed breakdown of review sentiment rather than a quick signal scan.
+Analyze a company's Trustpilot review sentiment using three specialized API calls. Use this skill when you need a detailed breakdown of review sentiment rather than a quick signal scan.
 
-## MCP Tools Used
+## Tools Used
 
-- `signal_trustpilot_negative_reviews` (5 tokens) — 1-star reviews in the last 30 days
-- `signal_trustpilot_negative_support_reviews` (5 tokens) — 1-star reviews mentioning "support"
-- `signal_trustpilot_positive_reviews` (5 tokens) — 4-5 star reviews in the last 30 days
+- `signal_trustpilot_negative_reviews` (5 tokens):1-star reviews in the last 30 days
+- `signal_trustpilot_negative_support_reviews` (5 tokens):1-star reviews mentioning "support"
+- `signal_trustpilot_positive_reviews` (5 tokens):4-5 star reviews in the last 30 days
+
+See `references/tools-reference.md` for exact commands.
 
 ## Workflow
 
 1. **Run all 3 Trustpilot tools**
-   - Call each tool with the target `domain`
+   - Call each tool with the target `domain` using the Bash tool
    - All three can be called in parallel (same data source, independent filters)
 
 2. **Analyze the sentiment balance**
@@ -27,7 +29,7 @@ Analyze a company's Trustpilot review sentiment using three specialized MCP tool
 3. **Identify patterns**
    - Look for recurring themes in negative review titles/messages
    - Check if support complaints are a significant portion of negative reviews
-   - Note review dates — are problems recent or ongoing?
+   - Note review dates:are problems recent or ongoing?
 
 4. **Output a reputation report**
    - Total positive vs negative reviews (last 30 days)

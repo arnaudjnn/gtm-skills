@@ -1,6 +1,33 @@
-# MCP Tools Reference
+# Outbound Tools API Reference
 
-Complete reference for all 12 MCP tools provided by the outbound-tools server.
+Complete reference for all 12 tools provided by the outbound-tools server.
+
+---
+
+## How to Call Tools
+
+Use the Bash tool to run curl commands. Every call follows this pattern:
+
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"TOOL_NAME","arguments":{...}},"id":1}'
+```
+
+- `$OUTBOUND_TOOLS_URL`:the server endpoint (set during setup)
+- `$OUTBOUND_API_KEY`:the API key for authentication (set during setup)
+- The response JSON contains the result in `result.content[0].text` (parse with `jq`)
+
+### Tip: parse responses with jq
+
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"list_email_accounts","arguments":{}},"id":1}' \
+  | jq -r '.result.content[0].text' | jq .
+```
 
 ---
 
@@ -8,7 +35,12 @@ Complete reference for all 12 MCP tools provided by the outbound-tools server.
 
 List all registered mailbox accounts.
 
-**Parameters:** None
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"list_email_accounts","arguments":{}},"id":1}'
+```
 
 **Returns:** Array of account objects:
 | Field | Type | Description |
@@ -25,6 +57,23 @@ List all registered mailbox accounts.
 ## send_email
 
 Send an email via SMTP. The sent message is automatically copied to the Sent folder.
+
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"send_email",
+      "arguments":{
+        "from":"sender@domain.com",
+        "to":["recipient@example.com"],
+        "subject":"Hello",
+        "text":"Plain text body"
+      }
+    },"id":1
+  }'
+```
 
 **Parameters:**
 | Name | Type | Required | Description |
@@ -47,15 +96,31 @@ At least one of `text` or `html` is required.
 
 Fetch received emails from the INBOX with pagination and optional tag filtering.
 
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"list_received_emails",
+      "arguments":{
+        "email":"user@domain.com",
+        "limit":50,
+        "page":1
+      }
+    },"id":1
+  }'
+```
+
 **Parameters:**
 | Name | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| email | string | yes | — | Email account |
+| email | string | yes |:| Email account |
 | limit | number | no | 50 | Emails per page |
 | page | number | no | 1 | Page number (1-indexed, most recent first) |
-| tag_filter | string | no | — | Boolean tag filter expression |
+| tag_filter | string | no |:| Boolean tag filter expression |
 
-**Tag filter examples:** `'interested'`, `'classified AND interested'`, `'NOT classified'`, `'complained OR unsubscribed'`
+**Tag filter examples:** `"interested"`, `"classified AND interested"`, `"NOT classified"`, `"complained OR unsubscribed"`
 
 **Returns:** `{ emails: [...], total, page, limit }`
 
@@ -65,13 +130,30 @@ Fetch received emails from the INBOX with pagination and optional tag filtering.
 
 Fetch sent emails with pagination and optional tag filtering.
 
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"list_sent_emails",
+      "arguments":{
+        "email":"user@domain.com",
+        "limit":50,
+        "page":1,
+        "tag_filter":"NOT bounced"
+      }
+    },"id":1
+  }'
+```
+
 **Parameters:**
 | Name | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| email | string | yes | — | Email account |
+| email | string | yes |:| Email account |
 | limit | number | no | 50 | Emails per page |
 | page | number | no | 1 | Page number (1-indexed, most recent first) |
-| tag_filter | string | no | — | Boolean tag filter expression |
+| tag_filter | string | no |:| Boolean tag filter expression |
 
 **Returns:** `{ emails: [...], total, page, limit }`
 
@@ -81,24 +163,51 @@ Fetch sent emails with pagination and optional tag filtering.
 
 Match received inbox emails to their original sent emails. Useful for identifying which outbound emails got replies.
 
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"find_reply_threads",
+      "arguments":{
+        "email":"user@domain.com",
+        "unclassifiedOnly":true
+      }
+    },"id":1
+  }'
+```
+
 **Parameters:**
 | Name | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| email | string | yes | — | Email account to analyze |
+| email | string | yes |:| Email account to analyze |
 | receivedLimit | number | no | 50 | Max received emails to check |
 | sentLimit | number | no | 200 | Max sent emails to match against |
 | unclassifiedOnly | boolean | no | true | Only check emails without the 'classified' flag |
 
 **Returns:** `{ matches: [{ received, sent }], unmatchedUids: [...], totalChecked }`
 
-- `matches` — pairs of received emails matched to their original sent email
-- `unmatchedUids` — UIDs of received emails that couldn't be matched to a sent email
+- `matches`:pairs of received emails matched to their original sent email
+- `unmatchedUids`:UIDs of received emails that couldn't be matched to a sent email
 
 ---
 
 ## list_metrics
 
 Get bounce, complaint, and interest rate metrics for an email account.
+
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"list_metrics",
+      "arguments":{"email":"user@domain.com"}
+    },"id":1
+  }'
+```
 
 **Parameters:**
 | Name | Type | Required | Description |
@@ -122,12 +231,29 @@ Get bounce, complaint, and interest rate metrics for an email account.
 
 Add an IMAP keyword (tag) to an email message.
 
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"add_email_tag",
+      "arguments":{
+        "email":"user@domain.com",
+        "uid":123,
+        "tag":"interested",
+        "folder":"INBOX"
+      }
+    },"id":1
+  }'
+```
+
 **Parameters:**
 | Name | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| email | string | yes | — | Email account that owns the mailbox |
-| uid | number | yes | — | UID of the email message |
-| tag | string | yes | — | IMAP keyword to add |
+| email | string | yes |:| Email account that owns the mailbox |
+| uid | number | yes |:| UID of the email message |
+| tag | string | yes |:| IMAP keyword to add |
 | folder | "INBOX" \| "SENT" | no | "INBOX" | Folder containing the message |
 
 **Returns:** Confirmation message.
@@ -138,12 +264,29 @@ Add an IMAP keyword (tag) to an email message.
 
 Remove an IMAP keyword (tag) from an email message.
 
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"remove_email_tag",
+      "arguments":{
+        "email":"user@domain.com",
+        "uid":123,
+        "tag":"interested",
+        "folder":"INBOX"
+      }
+    },"id":1
+  }'
+```
+
 **Parameters:**
 | Name | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| email | string | yes | — | Email account that owns the mailbox |
-| uid | number | yes | — | UID of the email message |
-| tag | string | yes | — | IMAP keyword to remove |
+| email | string | yes |:| Email account that owns the mailbox |
+| uid | number | yes |:| UID of the email message |
+| tag | string | yes |:| IMAP keyword to remove |
 | folder | "INBOX" \| "SENT" | no | "INBOX" | Folder containing the message |
 
 **Returns:** Confirmation message.
@@ -154,10 +297,25 @@ Remove an IMAP keyword (tag) from an email message.
 
 Add a contact email to one or more audience segments. Scans all accounts and folders (INBOX + SENT) for messages involving that contact and tags them.
 
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"add_to_audience",
+      "arguments":{
+        "email":"contact@example.com",
+        "segments":["leads","vip"]
+      }
+    },"id":1
+  }'
+```
+
 **Parameters:**
 | Name | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| email | string | yes | — | Contact email to segment |
+| email | string | yes |:| Contact email to segment |
 | segments | string[] | no | ["general"] | Audience segments to add (e.g., `["leads", "vip"]`) |
 
 **Returns:** Confirmation with count of tagged messages across accounts.
@@ -167,6 +325,21 @@ Add a contact email to one or more audience segments. Scans all accounts and fol
 ## remove_from_audience
 
 Remove a contact email from audience segments.
+
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"remove_from_audience",
+      "arguments":{
+        "email":"contact@example.com",
+        "segments":["leads"]
+      }
+    },"id":1
+  }'
+```
 
 **Parameters:**
 | Name | Type | Required | Description |
@@ -182,6 +355,13 @@ Remove a contact email from audience segments.
 
 List all audience segments with their contacts, aggregated across all accounts and folders.
 
+```bash
+curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OUTBOUND_API_KEY" \
+  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"list_audiences","arguments":{}},"id":1}'
+```
+
 **Parameters:** None
 
 **Returns:**
@@ -191,7 +371,7 @@ List all audience segments with their contacts, aggregated across all accounts a
     {
       "name": "leads",
       "count": 42,
-      "contacts": ["alice@example.com", "bob@example.com", ...]
+      "contacts": ["alice@example.com", "bob@example.com"]
     }
   ]
 }

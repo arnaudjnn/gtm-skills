@@ -5,7 +5,7 @@ description: Send follow-up emails to prospects who haven't replied. Identifies 
 
 # Follow-Up Sequences
 
-Automatically follow up with prospects who haven't replied to your outreach. Identifies unreplied sent emails and sends contextual follow-ups.
+Automatically follow up with prospects who haven't replied to your outreach. Identifies unreplied sent emails and sends contextual follow-ups. See `references/tools-reference.md` for exact commands.
 
 ## Workflow
 
@@ -18,11 +18,11 @@ Automatically follow up with prospects who haven't replied to your outreach. Ide
 
 3. **Identify which got replies**
    - Call `find_reply_threads` to match received replies to sent emails
-   - Filter these out — only keep sent emails with no matching reply
+   - Filter these out:only keep sent emails with no matching reply
 
 4. **Filter by age**
    - Only follow up on emails old enough (e.g., 3+ days since sent)
-   - Skip emails that are too recent — give prospects time to respond
+   - Skip emails that are too recent:give prospects time to respond
 
 5. **Check sequence position**
    - Check tags on each sent email for existing follow-up tags (e.g., `followup_1`, `followup_2`)
@@ -56,6 +56,6 @@ Automatically follow up with prospects who haven't replied to your outreach. Ide
 - Final email: acknowledge no response, leave the door open
 
 ### Tags
-- `followup_1`, `followup_2`, etc. — track sequence position
-- `followed_up` — mark original email as having a follow-up sent
-- `sequence_complete` — mark when all follow-ups are exhausted
+- `followup_1`, `followup_2`, etc.:track sequence position
+- `followed_up`:mark original email as having a follow-up sent
+- `sequence_complete`:mark when all follow-ups are exhausted

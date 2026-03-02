@@ -5,7 +5,7 @@ description: Generate email campaign analytics and performance reports. Track bo
 
 # Campaign Analytics
 
-Generate performance reports across all email accounts. Track deliverability, engagement, and audience health.
+Generate performance reports across all email accounts. Track deliverability, engagement, and audience health. See `references/tools-reference.md` for exact commands.
 
 ## Workflow
 

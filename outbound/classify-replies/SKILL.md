@@ -5,7 +5,7 @@ description: Classify received reply emails by sentiment and tag them. Categorie
 
 # Classify Replies
 
-Automatically classify incoming reply emails by sentiment and tag them with the appropriate category. This keeps your mailbox organized and feeds into downstream skills (clean-bounces, follow-up, analytics).
+Automatically classify incoming reply emails by sentiment and tag them with the appropriate category. This keeps your mailbox organized and feeds into downstream skills (clean-bounces, follow-up, analytics). See `references/tools-reference.md` for exact commands.
 
 ## Categories
 
@@ -32,12 +32,12 @@ Automatically classify incoming reply emails by sentiment and tag them with the 
    - Each reply gets exactly one category
 
 4. **Tag the reply** (INBOX)
-   - `add_email_tag` with the category tag (e.g., `interested`) on the reply in INBOX
-   - `add_email_tag` with `classified` on the reply in INBOX
+   - Call `add_email_tag` with the category tag (e.g., `interested`) on the reply in INBOX
+   - Call `add_email_tag` with `classified` on the reply in INBOX
 
 5. **Tag the original sent email** (SENT)
-   - For matched replies: `add_email_tag` with the same category tag on the sent email in SENT
-   - `add_email_tag` with `classified` on the sent email in SENT
+   - For matched replies: call `add_email_tag` with the same category tag on the sent email in SENT
+   - Call `add_email_tag` with `classified` on the sent email in SENT
 
 6. **Handle unmatched replies**
    - For replies that couldn't be matched to a sent email, still classify the reply

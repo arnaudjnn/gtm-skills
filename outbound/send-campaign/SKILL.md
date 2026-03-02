@@ -5,7 +5,7 @@ description: Send outbound email campaigns to audience segments. Handles account
 
 # Send Campaign
 
-Send outbound email campaigns to audience segments with account rotation and deliverability safeguards.
+Send outbound email campaigns to audience segments with account rotation and deliverability safeguards. See `references/tools-reference.md` for exact commands.
 
 ## Workflow
 
@@ -51,7 +51,7 @@ Send outbound email campaigns to audience segments with account rotation and del
 - Space emails 30-60 seconds apart (don't blast all at once)
 - Stop sending from an account if bounce rate exceeds 2%
 - Stop sending from an account if complaint rate exceeds 0.1%
-- Use plain text or minimal HTML — avoid heavy formatting
+- Use plain text or minimal HTML:avoid heavy formatting
 - Personalize subject lines and opening lines
 
 ### Campaign Tags
