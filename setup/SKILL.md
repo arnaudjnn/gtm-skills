@@ -14,7 +14,7 @@ One row per server dependency. This table is the source of truth for what needs 
 | ID | Name | Required By | Type | Endpoint |
 |----|------|-------------|------|----------|
 | `outbound-tools` | Outbound Tools | outbound, classify-replies, send-campaign, follow-up, clean-bounces, analytics | `railway-template` | User's Railway URL |
-| `signals-tools` | Signals Tools | signals, detect-all, reputation, social-growth, hiring | `hosted-api-key` | `https://gtm-engine.sh/mcp` |
+| `signals-tools` | Signals Tools | signals, detect-all, reputation, social-growth, hiring | `hosted-api-key` | `https://signals.gtm-engine.sh/mcp` |
 
 ## Env Vars per Dependency
 
@@ -23,7 +23,7 @@ One row per server dependency. This table is the source of truth for what needs 
 | `outbound-tools` | `MAILPOOL_API_KEY` | Ask user | Yes |
 | `outbound-tools` | `API_KEY` | Auto-generate (random 32-char hex) | Yes |
 | `outbound-tools` | `ANTHROPIC_API_KEY` | Ask user | No |
-| `signals-tools` | `SIGNALS_API_KEY` | Ask user | Yes |
+| `signals-tools` | `GTM_ENGINE_API_KEY` | Ask user | Yes |
 
 ## Skill Group Mapping
 
@@ -74,8 +74,23 @@ Iterate over the collected dependency IDs. For each one, look up its **Type** in
 
 #### Hosted API Key Procedure
 
-1. **Ask the user for their API key**: Prompt them to provide their signals API key.
-2. **Store the key** for use in Step 4.
+1. **Ask the user for their email**: Prompt them for the email to register with.
+2. **Request a verification code** via the `get_api_key` tool:
+   ```bash
+   curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+     -H "Content-Type: application/json" \
+     -H "Accept: application/json, text/event-stream" \
+     -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_api_key","arguments":{"email":"USER_EMAIL"}},"id":1}'
+   ```
+3. **Ask the user for the 6-digit code** they received by email.
+4. **Submit the code** to get the API key:
+   ```bash
+   curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+     -H "Content-Type: application/json" \
+     -H "Accept: application/json, text/event-stream" \
+     -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_api_key","arguments":{"email":"USER_EMAIL","code":"CODE"}},"id":1}'
+   ```
+5. **Store the key** for use in Step 4.
 
 ### Step 4: Configure Environment Variables
 
@@ -89,8 +104,7 @@ export OUTBOUND_API_KEY="<the API_KEY from Step 3>"
 
 **For signals-tools:**
 ```bash
-export SIGNALS_TOOLS_URL="https://gtm-engine.sh/mcp"
-export SIGNALS_API_KEY="<the key from Step 3>"
+export GTM_ENGINE_API_KEY="<the key from Step 3>"
 ```
 
 Write these exports to the user's shell profile (`~/.zshrc`, `~/.bashrc`, or `~/.profile`) so they persist across sessions. Ask the user which file to use, or detect their shell.
@@ -112,9 +126,10 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 
 **For signals-tools:**
 ```bash
-curl -s -X POST "$SIGNALS_TOOLS_URL" \
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"detect_signal","arguments":{"domain":"gymshark.com"}},"id":1}' \
   | jq -r '.result.content[0].text'
 ```

@@ -9,22 +9,24 @@ Complete reference for all 6 tools provided by the signals-tools server.
 Use the Bash tool to run curl commands. Every call follows this pattern:
 
 ```bash
-curl -s -X POST "$SIGNALS_TOOLS_URL" \
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"TOOL_NAME","arguments":{...}},"id":1}'
 ```
 
-- `$SIGNALS_TOOLS_URL`:the server endpoint, defaults to `https://gtm-engine.sh/mcp` (set during setup)
-- `$SIGNALS_API_KEY`:the API key for authentication (set during setup)
+- The server endpoint is `https://signals.gtm-engine.sh/mcp`
+- `$GTM_ENGINE_API_KEY`: the API key for authentication (see the signals SKILL.md for how to obtain one)
 - The response JSON contains the result in `result.content[0].text` (parse with `jq`)
 
 ### Tip: parse responses with jq
 
 ```bash
-curl -s -X POST "$SIGNALS_TOOLS_URL" \
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"detect_signal","arguments":{"domain":"gymshark.com"}},"id":1}' \
   | jq -r '.result.content[0].text' | jq .
 ```
@@ -38,9 +40,10 @@ Runs multiple signal detections for a company domain and returns only the ones t
 **Cost:** 15 tokens
 
 ```bash
-curl -s -X POST "$SIGNALS_TOOLS_URL" \
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
     "jsonrpc":"2.0","method":"tools/call","params":{
       "name":"detect_signal",
@@ -81,9 +84,10 @@ Detects negative Trustpilot reviews for a company in the last 30 days. A review 
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "$SIGNALS_TOOLS_URL" \
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
     "jsonrpc":"2.0","method":"tools/call","params":{
       "name":"signal_trustpilot_negative_reviews",
@@ -115,9 +119,10 @@ Detects negative Trustpilot reviews that mention customer support. Same as `sign
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "$SIGNALS_TOOLS_URL" \
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
     "jsonrpc":"2.0","method":"tools/call","params":{
       "name":"signal_trustpilot_negative_support_reviews",
@@ -142,9 +147,10 @@ Detects positive Trustpilot reviews for a company in the last 30 days. A review 
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "$SIGNALS_TOOLS_URL" \
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
     "jsonrpc":"2.0","method":"tools/call","params":{
       "name":"signal_trustpilot_positive_reviews",
@@ -191,9 +197,10 @@ Detects significant follower spikes on Instagram and/or TikTok over a 14-day win
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "$SIGNALS_TOOLS_URL" \
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
     "jsonrpc":"2.0","method":"tools/call","params":{
       "name":"signal_socials_spike",
@@ -246,9 +253,10 @@ Detects whether a company is hiring for roles matching given job title filters v
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "$SIGNALS_TOOLS_URL" \
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $SIGNALS_API_KEY" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
     "jsonrpc":"2.0","method":"tools/call","params":{
       "name":"signal_hiring_role",

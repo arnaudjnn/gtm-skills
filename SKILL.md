@@ -12,11 +12,8 @@ inputs:
   - name: OUTBOUND_API_KEY
     description: API key for authenticating with the outbound-tools server. Required for outbound email operations.
     required: false
-  - name: SIGNALS_TOOLS_URL
-    description: Endpoint URL for the signals-tools server. Defaults to https://gtm-engine.sh/mcp.
-    required: false
-  - name: SIGNALS_API_KEY
-    description: API key for the signals-tools server at gtm-engine.sh. Obtain one by running the setup sub-skill.
+  - name: GTM_ENGINE_API_KEY
+    description: API key for the GTM Engine signals server at signals.gtm-engine.sh. Obtain one via the get_api_key tool (see signals sub-skill).
     required: false
   - name: MAILPOOL_API_KEY
     description: Mailpool API key for deploying the outbound-tools server on Railway. Only needed during setup.
