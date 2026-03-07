@@ -498,7 +498,7 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 
 ## list_linkedin_conversations
 
-Lists the 25 most recent LinkedIn conversations for a connected account. Returns conversations with participant info, last message preview, and full message history for each conversation (both sent and received messages).
+Lists the 25 most recent LinkedIn conversations for a connected account. Returns conversations with participant info, last message preview, and up to 100 messages per conversation (both sent and received).
 
 **Cost:** 5 tokens
 
