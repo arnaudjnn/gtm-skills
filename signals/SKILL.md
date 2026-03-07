@@ -13,7 +13,7 @@ To use the signals tools, you need a `GTM_ENGINE_API_KEY`. Obtain one via the `g
 
 **Step 1 — Request a verification code:**
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+curl -s -X POST "https://gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_api_key","arguments":{"email":"YOUR_EMAIL"}},"id":1}'
@@ -21,7 +21,7 @@ curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
 
 **Step 2 — Submit the 6-digit code received by email:**
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+curl -s -X POST "https://gtm-engine.sh/mcp" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_api_key","arguments":{"email":"YOUR_EMAIL","code":"123456"}},"id":1}'
