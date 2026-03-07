@@ -62,7 +62,7 @@ See `references/tools-reference.md` for full commands and parameter details on a
 
 ### Messaging (5 tokens)
 - `send_linkedin_message`:send a message from a connected account. 5 tokens.
-- `list_linkedin_received_messages`:get messages received from a specific user. 5 tokens.
+- `list_linkedin_conversations`:list recent conversations with messages. 5 tokens.
 
 ## Sub-Skills
 

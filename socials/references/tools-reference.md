@@ -496,9 +496,9 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 
 ---
 
-## list_linkedin_received_messages
+## list_linkedin_conversations
 
-Gets messages received from a specific LinkedIn user. Reads the conversation between the connected account and the specified sender.
+Lists recent LinkedIn conversations for a connected account. Returns conversations with participant info, last message preview, and full message history for each conversation (both sent and received messages).
 
 **Cost:** 5 tokens
 
@@ -509,10 +509,10 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
     "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_linkedin_received_messages",
+      "name":"list_linkedin_conversations",
       "arguments":{
         "username":"myaccount",
-        "senderUsername":"rauchg"
+        "count":10
       }
     },"id":1
   }'
@@ -522,21 +522,34 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
 | username | string | yes | Connected LinkedIn account username (inbox owner) |
-| senderUsername | string | yes | LinkedIn username of the person whose messages to retrieve |
+| count | number | no | Number of recent conversations to return (1-40, default 10) |
 
 **Returns:**
 | Field | Type | Description |
 |-------|------|-------------|
 | status | string | "ok" or "error" |
-| messages | LinkedInMessage[] | Array of messages in the conversation |
+| conversations | LinkedInConversation[] | Array of conversations |
 | error | string | Error message (when status is "error") |
 
-### LinkedInMessage shape
+### LinkedInConversation shape
+
+| Field | Type | Description |
+|-------|------|-------------|
+| conversationUrn | string | LinkedIn conversation URN identifier |
+| participant | string | Display name of the other participant |
+| participantProfileId | string | LinkedIn profile ID of the other participant |
+| participantHeadline | string | Headline of the other participant |
+| lastMessage | string | Text of the most recent message |
+| lastMessageSender | string | Name of who sent the last message |
+| lastMessageAt | string | ISO 8601 timestamp of the last message |
+| messages | ConversationMessage[] | Full message history for the conversation |
+
+### ConversationMessage shape
 
 | Field | Type | Description |
 |-------|------|-------------|
 | sender | string | Display name of the message sender |
-| senderUsername | string | LinkedIn profile ID of the sender |
+| senderProfileId | string | LinkedIn profile ID of the sender |
 | body | string | Message text content |
 | deliveredAt | string | ISO 8601 timestamp of when the message was delivered |
 

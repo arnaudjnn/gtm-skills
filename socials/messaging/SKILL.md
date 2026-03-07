@@ -10,7 +10,7 @@ Send and read LinkedIn messages through connected accounts. Use this for outreac
 ## Tools Used
 
 - `send_linkedin_message` (5 tokens): send a message. Params: `senderUsername` (connected account), `recipientUsername` (recipient), `message` (1-8000 chars).
-- `list_linkedin_received_messages` (5 tokens): get messages from a specific user. Params: `username` (connected account / inbox owner), `senderUsername` (person whose messages to read).
+- `list_linkedin_conversations` (5 tokens): list recent conversations with participant info and full message history. Params: `username` (connected account), `count` (optional, 1-40, default 10).
 
 See `references/tools-reference.md` for exact commands.
 
@@ -34,14 +34,14 @@ See `references/tools-reference.md` for exact commands.
    - Call `send_linkedin_message` with senderUsername, recipientUsername, and message
    - Confirm delivery to the user
 
-### Reading messages
+### Reading conversations
 
 1. **Verify the inbox account is connected**
    - Use `list_connected_linkedin_accounts` to confirm the account
 
-2. **Fetch messages**
-   - Call `list_linkedin_received_messages` with the inbox owner's username and the sender's username
-   - Returns the conversation messages between the two users
+2. **Fetch conversations**
+   - Call `list_linkedin_conversations` with the account username and optional count
+   - Returns recent conversations with participant info (name, headline, profile ID) and full message history for each
 
 ## Safety Notes
 
