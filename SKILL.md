@@ -2,7 +2,7 @@
 name: gtm-skills
 description: GTM skills using Bash. Outbound email workflows (campaigns, reply classification, follow-ups, bounce cleanup, analytics) and buying signal detection (Trustpilot reviews, social media spikes, LinkedIn hiring).
 metadata:
-  author: arnaudjeannin
+  author: arnaudjnn
   version: "1.0.0"
   homepage: https://gtm-engine.sh
 inputs:
