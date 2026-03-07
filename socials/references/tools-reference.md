@@ -462,9 +462,9 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 
 ---
 
-## send_linkedin_dm
+## send_linkedin_message
 
-Sends a direct message on LinkedIn from a connected account.
+Sends a message on LinkedIn from a connected account.
 
 **Cost:** 5 tokens
 
@@ -475,7 +475,7 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
     "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"send_linkedin_dm",
+      "name":"send_linkedin_message",
       "arguments":{
         "senderUsername":"myaccount",
         "recipientUsername":"rauchg",
@@ -493,6 +493,52 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 | message | string | yes | Message content (1-8000 characters) |
 
 **Returns:** Send result confirmation.
+
+---
+
+## list_linkedin_received_messages
+
+Gets messages received from a specific LinkedIn user. Reads the conversation between the connected account and the specified sender.
+
+**Cost:** 5 tokens
+
+```bash
+curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"list_linkedin_received_messages",
+      "arguments":{
+        "username":"myaccount",
+        "senderUsername":"rauchg"
+      }
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| username | string | yes | Connected LinkedIn account username (inbox owner) |
+| senderUsername | string | yes | LinkedIn username of the person whose messages to retrieve |
+
+**Returns:**
+| Field | Type | Description |
+|-------|------|-------------|
+| status | string | "ok" or "error" |
+| messages | LinkedInMessage[] | Array of messages in the conversation |
+| error | string | Error message (when status is "error") |
+
+### LinkedInMessage shape
+
+| Field | Type | Description |
+|-------|------|-------------|
+| sender | string | Display name of the message sender |
+| senderUsername | string | LinkedIn profile ID of the sender |
+| body | string | Message text content |
+| deliveredAt | string | ISO 8601 timestamp of when the message was delivered |
 
 ---
 

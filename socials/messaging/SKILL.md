@@ -1,19 +1,22 @@
 ---
 name: messaging
-description: Send LinkedIn direct messages via connected accounts.
+description: Send and read LinkedIn messages via connected accounts.
 ---
 
 # LinkedIn Messaging
 
-Send LinkedIn direct messages through connected accounts. Use this for outreach, follow-ups, and prospect engagement.
+Send and read LinkedIn messages through connected accounts. Use this for outreach, follow-ups, and reading conversation history.
 
 ## Tools Used
 
-- `send_linkedin_dm` (5 tokens): send a direct message. Params: `senderUsername` (connected account), `recipientUsername` (recipient), `message` (1-8000 chars).
+- `send_linkedin_message` (5 tokens): send a message. Params: `senderUsername` (connected account), `recipientUsername` (recipient), `message` (1-8000 chars).
+- `list_linkedin_received_messages` (5 tokens): get messages from a specific user. Params: `username` (connected account / inbox owner), `senderUsername` (person whose messages to read).
 
 See `references/tools-reference.md` for exact commands.
 
 ## Workflow
+
+### Sending a message
 
 1. **Verify sender account is connected**
    - Use `list_connected_linkedin_accounts` to confirm the sender account is available
@@ -25,21 +28,31 @@ See `references/tools-reference.md` for exact commands.
 
 3. **Confirm with the user before sending**
    - Always show the full message content and recipient to the user
-   - Wait for explicit approval before calling `send_linkedin_dm`
+   - Wait for explicit approval before calling `send_linkedin_message`
 
-4. **Send the DM**
-   - Call `send_linkedin_dm` with senderUsername, recipientUsername, and message
+4. **Send the message**
+   - Call `send_linkedin_message` with senderUsername, recipientUsername, and message
    - Confirm delivery to the user
+
+### Reading messages
+
+1. **Verify the inbox account is connected**
+   - Use `list_connected_linkedin_accounts` to confirm the account
+
+2. **Fetch messages**
+   - Call `list_linkedin_received_messages` with the inbox owner's username and the sender's username
+   - Returns the conversation messages between the two users
 
 ## Safety Notes
 
 - Always confirm message content with the user before sending
 - Respect LinkedIn rate limits
 - Keep messages personal and relevant
-- The sender must be a connected LinkedIn account
+- The sender/inbox owner must be a connected LinkedIn account
 
 ## Use Cases
 
 - "Send a LinkedIn message to johndoe from my account"
 - "Follow up with this prospect on LinkedIn"
-- "Message the VP of Sales at acme from my connected account"
+- "What did janedoe message me on LinkedIn?"
+- "Show me my conversation with the VP of Sales"

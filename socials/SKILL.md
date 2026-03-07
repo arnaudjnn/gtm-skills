@@ -61,7 +61,8 @@ See `references/tools-reference.md` for full commands and parameter details on a
 - `list_linkedin_company_employees`:paginated employee directory with name, headline, profile URL. 5 tokens.
 
 ### Messaging (5 tokens)
-- `send_linkedin_dm`:send a direct message from a connected account. 5 tokens.
+- `send_linkedin_message`:send a message from a connected account. 5 tokens.
+- `list_linkedin_received_messages`:get messages received from a specific user. 5 tokens.
 
 ## Sub-Skills
 
@@ -71,7 +72,7 @@ See `references/tools-reference.md` for full commands and parameter details on a
 | `posts` | Researching post content, engagement, or what a company's employees are posting |
 | `jobs` | Checking job listings or hiring activity for a company |
 | `companies` | Browsing a company's employee directory or finding specific roles |
-| `messaging` | Sending a LinkedIn direct message |
+| `messaging` | Sending or reading LinkedIn messages |
 
 ## Quick Routing
 
@@ -83,4 +84,4 @@ See `references/tools-reference.md` for full commands and parameter details on a
 
 **Browsing a company's employees?** -> `companies`
 
-**Sending a LinkedIn DM?** -> `messaging`
+**Sending or reading LinkedIn messages?** -> `messaging`
