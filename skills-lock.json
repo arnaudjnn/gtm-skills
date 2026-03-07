@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "gtm-skills": {
+      "source": "arnaudjnn/gtm-skills",
+      "sourceType": "github",
+      "computedHash": "d510f6ca959fed8b8b04280cdcb30c630dffc09c2385cb04d4f0a4f2ce3e526d"
+    },
+    "skill-creator": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "computedHash": "b122f4d1e91aa1d83027e050b5b37c3156203ee85458d7b1360bc48167c9e02a"
+    }
+  }
+}
