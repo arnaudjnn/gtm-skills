@@ -62,6 +62,7 @@ See `references/tools-reference.md` for full commands and parameter details on a
 
 ### Messaging (5 tokens)
 - `send_linkedin_message`:send a message from a connected account. 5 tokens.
+- `send_linkedin_invitation`:send a connection request with optional message. 5 tokens.
 - `list_linkedin_conversations`:list 25 most recent conversations with up to 100 messages each. 5 tokens.
 
 ## Sub-Skills

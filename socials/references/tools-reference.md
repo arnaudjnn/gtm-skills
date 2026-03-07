@@ -1,6 +1,6 @@
 # Socials Tools API Reference
 
-Complete reference for all 15 tools provided by the socials-tools server.
+Complete reference for all 16 tools provided by the socials-tools server.
 
 ---
 
@@ -493,6 +493,40 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 | message | string | yes | Message content (1-8000 characters) |
 
 **Returns:** Send result confirmation.
+
+---
+
+## send_linkedin_invitation
+
+Sends a LinkedIn connection request (invitation) from a connected account, with an optional personal message.
+
+**Cost:** 5 tokens
+
+```bash
+curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"send_linkedin_invitation",
+      "arguments":{
+        "senderUsername":"myaccount",
+        "recipientUsername":"rauchg",
+        "message":"Happy to connect!"
+      }
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| senderUsername | string | yes | LinkedIn username of the connected sender account |
+| recipientUsername | string | yes | LinkedIn username of the person to invite |
+| message | string | no | Optional personal note (max 300 characters) |
+
+**Returns:** Invitation result confirmation.
 
 ---
 

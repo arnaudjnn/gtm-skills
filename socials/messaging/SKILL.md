@@ -10,6 +10,7 @@ Send and read LinkedIn messages through connected accounts. Use this for outreac
 ## Tools Used
 
 - `send_linkedin_message` (5 tokens): send a message. Params: `senderUsername` (connected account), `recipientUsername` (recipient), `message` (1-8000 chars).
+- `send_linkedin_invitation` (5 tokens): send a connection request with optional message. Params: `senderUsername` (connected account), `recipientUsername` (recipient), `message` (optional, max 300 chars).
 - `list_linkedin_conversations` (5 tokens): list the 25 most recent conversations with participant info and up to 100 messages per conversation. Params: `username` (connected account).
 
 See `references/tools-reference.md` for exact commands.
@@ -34,6 +35,23 @@ See `references/tools-reference.md` for exact commands.
    - Call `send_linkedin_message` with senderUsername, recipientUsername, and message
    - Confirm delivery to the user
 
+### Sending a connection invitation
+
+1. **Verify sender account is connected**
+   - Use `list_connected_linkedin_accounts` to confirm the sender account is available
+
+2. **Optionally compose a message**
+   - A short personal note (max 300 characters) can be included with the invitation
+   - If omitted, LinkedIn sends a default invitation
+
+3. **Confirm with the user before sending**
+   - Always show the recipient and optional message to the user
+   - Wait for explicit approval before calling `send_linkedin_invitation`
+
+4. **Send the invitation**
+   - Call `send_linkedin_invitation` with senderUsername, recipientUsername, and optional message
+   - Confirm delivery to the user
+
 ### Reading conversations
 
 1. **Verify the inbox account is connected**
@@ -54,5 +72,6 @@ See `references/tools-reference.md` for exact commands.
 
 - "Send a LinkedIn message to johndoe from my account"
 - "Follow up with this prospect on LinkedIn"
+- "Send a connection request to janedoe with a note"
 - "What did janedoe message me on LinkedIn?"
 - "Show me my conversation with the VP of Sales"
