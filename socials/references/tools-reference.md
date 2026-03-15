@@ -1,6 +1,6 @@
 # Socials Tools API Reference
 
-Complete reference for all 19 tools provided by the socials-tools server.
+Complete reference for all 20 tools provided by the socials-tools server.
 
 ---
 
@@ -155,6 +155,41 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 |-------|------|-------------|
 | domain | string | The queried domain |
 | linkedin_url | string | LinkedIn company page URL |
+
+---
+
+## get_linkedin_profile_url
+
+Finds a person's LinkedIn profile URL given their name and company domain.
+
+**Cost:** 5 tokens
+
+```bash
+curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"get_linkedin_profile_url",
+      "arguments":{"name":"Arnaud Jeannin","domain":"gorgias.com"}
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| name | string | yes | The person's full name (e.g. "Arnaud Jeannin") |
+| domain | string | yes | The company domain to match against (e.g. "gorgias.com") |
+
+**Returns:**
+| Field | Type | Description |
+|-------|------|-------------|
+| name | string | The queried name |
+| domain | string | The queried domain |
+| linkedin_url | string | LinkedIn profile URL found |
+| location | string | Person's location (if available from search results) |
 
 ---
 

@@ -9,7 +9,9 @@ Run a full buying signal scan on a company domain with a single API call. This i
 
 ## Tools Used
 
-- `detect_signal` (15 tokens):runs `signal_socials_spike`, `signal_trustpilot_negative_support_reviews`, and `signal_hiring_role` (CX filter hardcoded)
+- `detect_signal` (15 tokens):runs all configured signal checks (default: `signal_socials_spike`, `signal_trustpilot_negative_support_reviews`, `signal_hiring_role`)
+- `set_signals_order` (0 tokens):customise which signals run and in what order
+- `get_signals_order` (0 tokens):see current signal order
 
 ## Workflow
 
@@ -43,8 +45,16 @@ Run a full buying signal scan on a company domain with a single API call. This i
 - "Quick signal check on notion.so"
 - Batch scanning a list of prospect domains
 
+## Customising Signal Order
+
+Use `set_signals_order` to change which signals `detect_signal` runs and in what order:
+- Available: `signal_socials_spike`, `signal_trustpilot_negative_support_reviews`, `signal_hiring_role`
+- Omit a signal from the list to disable it
+- Use `get_signals_order` to see the current configuration
+
 ## Limitations
 
 - Uses hardcoded CX-focused job filter:for custom filters, use `hiring` sub-skill directly
 - Only checks negative *support* reviews:for full Trustpilot analysis, use `reputation` sub-skill
 - Does not include `signal_trustpilot_positive_reviews` or `signal_trustpilot_negative_reviews`
+- `signal_technologies_identified` is not included in `detect_signal` — use it directly

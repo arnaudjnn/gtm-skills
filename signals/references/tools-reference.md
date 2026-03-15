@@ -1,6 +1,6 @@
 # Signals Tools API Reference
 
-Complete reference for all 6 tools provided by the signals-tools server.
+Complete reference for all 9 tools provided by the signals-tools server.
 
 ---
 
@@ -300,3 +300,112 @@ curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
 | url | string | Job listing URL |
 | location | string | Job location |
 | posted_at | string | When the job was posted |
+
+---
+
+## signal_technologies_identified
+
+Detects whether specific technologies are used on a website by crawling HTML and JS bundles.
+
+**Cost:** 5 tokens
+
+```bash
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"signal_technologies_identified",
+      "arguments":{
+        "domain":"mammaly.de",
+        "technologies":["zendesk.com","intercom.io","digitalgenius.com"]
+      }
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| domain | string | yes | The company domain to look up (e.g. "mammaly.de") |
+| technologies | string[] | yes | Array of technology domains to detect (e.g. ["zendesk.com", "intercom.io"]) |
+
+**Returns:**
+| Field | Type | Description |
+|-------|------|-------------|
+| domain | string | The queried domain |
+| is_detected | boolean | True if at least one technology was found |
+| technologies_found | string[] | List of matched technology domains |
+| matches | TechnologyMatch[] | Per-technology results |
+
+### TechnologyMatch shape
+
+| Field | Type | Description |
+|-------|------|-------------|
+| technology | string | Technology domain searched for |
+| found | boolean | Whether it was found |
+| sample_references | string[] | Snippets showing where it was found in the source |
+
+---
+
+## set_signals_order
+
+Sets the order in which `detect_signal` runs signal checks for your workspace. Signals omitted from the list will be skipped.
+
+**Cost:** 0 tokens
+
+```bash
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"set_signals_order",
+      "arguments":{
+        "order":["signal_socials_spike","signal_hiring_role"]
+      }
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| order | string[] | yes | Ordered list of signal names. Available: `signal_socials_spike`, `signal_trustpilot_negative_support_reviews`, `signal_hiring_role` |
+
+**Returns:**
+| Field | Type | Description |
+|-------|------|-------------|
+| message | string | Confirmation message |
+| order | string[] | The new signal order |
+
+---
+
+## get_signals_order
+
+Returns the current signal execution order for your workspace.
+
+**Cost:** 0 tokens
+
+```bash
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"get_signals_order",
+      "arguments":{}
+    },"id":1
+  }'
+```
+
+**Parameters:** None.
+
+**Returns:**
+| Field | Type | Description |
+|-------|------|-------------|
+| order | string[] | Current signal execution order |
+| available_signals | string[] | All available signal names |

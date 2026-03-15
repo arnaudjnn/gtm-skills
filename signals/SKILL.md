@@ -36,8 +36,8 @@ export GTM_ENGINE_API_KEY="<your-key>"
 
 - **Input**: a company domain string (e.g. `"gymshark.com"`)
 - **Output**: triggered signals array with detection results
-- **Data sources**: Trustpilot (reviews), Instagram/TikTok (follower stats), LinkedIn (job listings)
-- **Token costs**: 5 tokens per individual signal tool, 15 tokens for `detect_signal` (runs 3 checks)
+- **Data sources**: Trustpilot (reviews), Instagram/TikTok (follower stats), LinkedIn (job listings), website HTML (technology detection)
+- **Token costs**: 5 tokens per individual signal tool, 15 tokens for `detect_signal` (runs all checks)
 
 ## How to Call Tools
 
@@ -57,10 +57,12 @@ Environment variable `GTM_ENGINE_API_KEY` must be set (see **Getting an API Key*
 
 ## Available Tools
 
-See `references/tools-reference.md` for full commands and parameter details on all 6 tools.
+See `references/tools-reference.md` for full commands and parameter details on all 9 tools.
 
 ### Meta
-- `detect_signal`:Run all signal detections at once (socials spike + negative support reviews + CX hiring). 15 tokens.
+- `detect_signal`:Run all signal detections at once (order customisable). 15 tokens.
+- `set_signals_order`:Set which signals `detect_signal` runs and in what order. 0 tokens.
+- `get_signals_order`:Get the current signal execution order. 0 tokens.
 
 ### Reputation (Trustpilot)
 - `signal_trustpilot_negative_reviews`:1-star reviews in the last 30 days. 5 tokens.
@@ -73,6 +75,9 @@ See `references/tools-reference.md` for full commands and parameter details on a
 ### Hiring
 - `signal_hiring_role`:LinkedIn job listings matching a title filter. 5 tokens.
 
+### Technology
+- `signal_technologies_identified`:Detect whether specific technologies are used on a website. 5 tokens.
+
 ## Sub-Skills
 
 | Skill | Use When |
@@ -81,6 +86,7 @@ See `references/tools-reference.md` for full commands and parameter details on a
 | `reputation` | Analyzing Trustpilot review sentiment (negative, positive, support-related) |
 | `social-growth` | Checking for social media follower spikes |
 | `hiring` | Checking if a company is hiring specific roles |
+| `technology` | Detecting specific technologies on a company's website |
 
 ## Quick Routing
 
@@ -91,3 +97,5 @@ See `references/tools-reference.md` for full commands and parameter details on a
 **Checking for social media follower growth spikes?** → `social-growth`
 
 **Looking for hiring activity on LinkedIn?** → `hiring`
+
+**Checking if a company uses specific technologies?** → `technology`
