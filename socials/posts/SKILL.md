@@ -14,7 +14,8 @@ Research LinkedIn post content, analyze engagement, and monitor what a company's
 - `list_linkedin_saved_posts` (10 tokens): a user's saved posts (requires connected account username)
 - `list_linkedin_post_reactions` (5 tokens): who reacted to a post and reaction types
 - `list_linkedin_post_comments` (5 tokens): comments and replies on a post
-- `list_linkedin_company_employees_posts` (20 tokens): recent posts from a company's employees
+- `list_linkedin_company_posts` (5 tokens): posts from a company's LinkedIn page with engagement metrics
+- `list_linkedin_company_employees_posts` (80 tokens): recent posts from a company's employees
 
 See `references/tools-reference.md` for exact commands.
 
@@ -35,7 +36,11 @@ The workflow depends on the use case:
 2. Analyze who is engaging: look for prospects, decision-makers, or competitors
 3. Summarize engagement patterns
 
-### Company Content Intelligence
+### Company Page Posts
+1. Call `list_linkedin_company_posts` with the company URL or slug
+2. See what the company is officially publishing: announcements, product updates, events
+
+### Company Employee Content Intelligence
 1. Call `list_linkedin_company_employees_posts` with the company URL or slug
 2. Identify what employees are posting about: product launches, hiring, events, thought leadership
 3. Surface notable posts with high engagement

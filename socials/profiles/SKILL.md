@@ -10,15 +10,17 @@ Look up structured LinkedIn profile data or find a company's LinkedIn page URL f
 ## Tools Used
 
 - `get_linkedin_profile` (2 tokens): structured profile with experiences, education, skills, and headline
-- `find_linkedin_url` (2 tokens): find a company's LinkedIn page URL from a domain
+- `get_linkedin_company_url` (2 tokens): find a company's LinkedIn page URL from a domain
+- `get_linkedin_profile_url` (5 tokens): find a person's LinkedIn profile URL from name + company domain
 
 See `references/tools-reference.md` for exact commands.
 
 ## Workflow
 
 1. **Look up profile or find company URL**
-   - For a person: call `get_linkedin_profile` with the LinkedIn username
-   - For a company domain: call `find_linkedin_url` with the domain
+   - For a person by username: call `get_linkedin_profile` with the LinkedIn username
+   - For a person by name: call `get_linkedin_profile_url` with name + company domain to find their URL, then `get_linkedin_profile`
+   - For a company domain: call `get_linkedin_company_url` with the domain
 
 2. **Extract key information**
    - Person: current role, company, tenure, past experience, education, headline
@@ -32,5 +34,5 @@ See `references/tools-reference.md` for exact commands.
 
 - "Get the LinkedIn profile for rauchg"
 - "Find the LinkedIn page for vercel.com"
+- "Find John Doe who works at Stripe on LinkedIn"
 - "What's the background of this prospect?"
-- "Look up the current role and experience for johndoe on LinkedIn"

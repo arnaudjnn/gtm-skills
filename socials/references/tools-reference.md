@@ -1,6 +1,6 @@
 # Socials Tools API Reference
 
-Complete reference for all 16 tools provided by the socials-tools server.
+Complete reference for all 19 tools provided by the socials-tools server.
 
 ---
 
@@ -126,7 +126,7 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 
 ---
 
-## find_linkedin_url
+## get_linkedin_company_url
 
 Finds the LinkedIn company page URL for a given domain.
 
@@ -139,7 +139,7 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
     "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"find_linkedin_url",
+      "name":"get_linkedin_company_url",
       "arguments":{"domain":"gymshark.com"}
     },"id":1
   }'
@@ -361,7 +361,7 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 
 Lists employees of a LinkedIn company page with pagination.
 
-**Cost:** 5 tokens
+**Cost:** 30 tokens
 
 ```bash
 curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
@@ -626,7 +626,7 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 
 Lists recent posts from employees of a given company. Finds active employees and collects their recent posts.
 
-**Cost:** 20 tokens
+**Cost:** 80 tokens
 
 ```bash
 curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
@@ -649,3 +649,132 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 | days_back | number | no | How many days back to look for posts (default: 7, max: 90) |
 
 **Returns:** Employees who posted recently with their posts, including author info, post content, publication dates, and social counts (reactions, comments).
+
+---
+
+## get_linkedin_company
+
+Gets structured company data from a domain name. Returns company name, description, industry, HQ location, employee count, follower count, LinkedIn URL, and funding info.
+
+**Cost:** 2 tokens
+
+```bash
+curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"get_linkedin_company",
+      "arguments":{"domain":"stripe.com"}
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| domain | string | yes | Company domain (e.g. "stripe.com", "vercel.com") |
+
+**Returns:**
+| Field | Type | Description |
+|-------|------|-------------|
+| company_id | string | LinkedIn company ID (use with `search_linkedin_company_contacts`) |
+| company_name | string | Company name |
+| description | string | Company description |
+| domain | string | Company domain |
+| industries | string[] | Industry list |
+| employee_count | number | Number of employees |
+| employee_range | string | Employee range (e.g. "501-1000") |
+| follower_count | number | LinkedIn follower count |
+| hq_city | string | HQ city |
+| hq_region | string | HQ state/region |
+| hq_country | string | HQ country code |
+| linkedin_url | string | LinkedIn company page URL |
+| specialties | string[] | Company specialties |
+| year_founded | number | Year founded |
+
+---
+
+## list_linkedin_company_posts
+
+Lists posts from a company's LinkedIn page with engagement metrics.
+
+**Cost:** 5 tokens
+
+```bash
+curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"list_linkedin_company_posts",
+      "arguments":{"company":"stripe","start":0,"sort":"recent"}
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| company | string | yes | LinkedIn company URL or slug (e.g. "stripe") |
+| start | number | no | Pagination offset (0 for page 1, 50 for page 2, etc.) |
+| sort | string | no | Sort order: `recent` (default) or `top` |
+
+**Returns:** Array of posts with:
+| Field | Type | Description |
+|-------|------|-------------|
+| text | string | Post content |
+| posted | string | Publication date (YYYY-MM-DD HH:MM:SS) |
+| post_url | string | Post URL |
+| urn | string | Post activity URN |
+| num_reactions | number | Total reactions |
+| num_comments | number | Total comments |
+| num_reposts | number | Total reposts |
+| num_likes | number | Like count |
+| num_empathy | number | Empathy reaction count |
+| images | array | Post images |
+| video | object | Post video (if any) |
+
+---
+
+## search_linkedin_company_contacts
+
+Searches for key contacts (decision makers) at a company by title keywords. Use `get_linkedin_company` first to get the `company_id` from a domain.
+
+**Cost:** 30 tokens
+
+```bash
+curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"search_linkedin_company_contacts",
+      "arguments":{
+        "company_id":"2135371",
+        "title_keywords":["CEO","CTO","VP Engineering"],
+        "limit":5
+      }
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| company_id | string | yes | LinkedIn company ID (from `get_linkedin_company`) |
+| title_keywords | string[] | yes | Title keywords to match (e.g. ["CEO", "CTO", "VP"]) |
+| limit | number | no | Max contacts to return (default: 10, max: 25) |
+
+**Returns:** Array of matching contacts with:
+| Field | Type | Description |
+|-------|------|-------------|
+| full_name | string | Contact's full name |
+| job_title | string | Current job title |
+| company | string | Company name |
+| location | string | Location |
+| linkedin_url | string | LinkedIn profile URL |
+| about | string | Profile about/summary |
