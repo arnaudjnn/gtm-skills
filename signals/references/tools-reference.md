@@ -1,6 +1,6 @@
 # Signals Tools API Reference
 
-Complete reference for all 9 tools provided by the signals-tools server.
+Complete reference for all 13 tools provided by the signals-tools server.
 
 ---
 
@@ -300,6 +300,118 @@ curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
 | url | string | Job listing URL |
 | location | string | Job location |
 | posted_at | string | When the job was posted |
+
+---
+
+## signal_hiring_support
+
+Detects whether a company is hiring for customer support / CX roles. Preset filter: CX, customer support, customer experience, customer service, support engineer, support specialist (NOT junior).
+
+**Cost:** 5 tokens
+
+```bash
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"signal_hiring_support",
+      "arguments":{"domain":"gymshark.com"}
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| domain | string | yes | The company domain to look up |
+
+**Returns:** Same shape as `signal_hiring_role`.
+
+---
+
+## signal_hiring_sales_rep
+
+Detects whether a company is actively hiring SDRs or BDRs. Preset filter: SDR, BDR, sales development, business development representative.
+
+**Cost:** 5 tokens
+
+```bash
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"signal_hiring_sales_rep",
+      "arguments":{"domain":"gymshark.com"}
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| domain | string | yes | The company domain to look up |
+
+**Returns:** Same shape as `signal_hiring_role`.
+
+---
+
+## signal_hiring_sales_leadership
+
+Detects whether a company is hiring sales leadership or RevOps roles. Preset filter: Head of Sales, VP Sales, Director of Sales, RevOps, Revenue Operations, CRO.
+
+**Cost:** 5 tokens
+
+```bash
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"signal_hiring_sales_leadership",
+      "arguments":{"domain":"gymshark.com"}
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| domain | string | yes | The company domain to look up |
+
+**Returns:** Same shape as `signal_hiring_role`.
+
+---
+
+## signal_hiring_sales_rep_repost
+
+Detects whether a company has reposted SDR/BDR roles within the last 60 days. Triggers only if 2+ postings are found, indicating ramp failure, turnover, or underperformance.
+
+**Cost:** 5 tokens
+
+```bash
+curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -d '{
+    "jsonrpc":"2.0","method":"tools/call","params":{
+      "name":"signal_hiring_sales_rep_repost",
+      "arguments":{"domain":"gymshark.com"}
+    },"id":1
+  }'
+```
+
+**Parameters:**
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| domain | string | yes | The company domain to look up |
+
+**Returns:** Same shape as `signal_hiring_role`. Note: `is_detected` is true only when 2+ postings are found (indicating a repost).
 
 ---
 

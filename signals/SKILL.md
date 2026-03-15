@@ -57,7 +57,7 @@ Environment variable `GTM_ENGINE_API_KEY` must be set (see **Getting an API Key*
 
 ## Available Tools
 
-See `references/tools-reference.md` for full commands and parameter details on all 9 tools.
+See `references/tools-reference.md` for full commands and parameter details on all 13 tools.
 
 ### Meta
 - `detect_signal`:Run all signal detections at once (order customisable). 15 tokens.
@@ -72,8 +72,12 @@ See `references/tools-reference.md` for full commands and parameter details on a
 ### Social Growth
 - `signal_socials_spike`:Follower spikes on Instagram/TikTok over 14 days. 5 tokens.
 
-### Hiring
-- `signal_hiring_role`:LinkedIn job listings matching a title filter. 5 tokens.
+### Hiring (5 tokens each)
+- `signal_hiring_role`:generic — job listings matching a custom title filter
+- `signal_hiring_support`:preset — CX/customer support roles
+- `signal_hiring_sales_rep`:preset — SDR/BDR roles (budget allocation signal)
+- `signal_hiring_sales_leadership`:preset — Head of Sales/VP Sales/RevOps (new leadership signal)
+- `signal_hiring_sales_rep_repost`:preset — SDR role reposted within 60 days (churn/failure signal)
 
 ### Technology
 - `signal_technologies_identified`:Detect whether specific technologies are used on a website. 5 tokens.
