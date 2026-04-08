@@ -14,8 +14,8 @@ One row per server dependency. This table is the source of truth for what needs 
 | ID | Name | Required By | Type | Endpoint |
 |----|------|-------------|------|----------|
 | `outbound-tools` | Outbound Tools | outbound, classify-replies, send-campaign, follow-up, clean-bounces, analytics | `railway-template` | User's Railway URL |
-| `signals-tools` | Signals Tools | signals, detect-all, reputation, social-growth, hiring | `hosted-api-key` | `https://signals.gtm-engine.sh/mcp` |
-| `socials-tools` | Socials Tools | socials, profiles, posts, jobs, companies, messaging | `hosted-api-key` | `https://socials.gtm-engine.sh/mcp` |
+| `signals-tools` | Signals Tools | signals, detect-all, reputation, social-growth, hiring | `hosted-api-key` | `https://signals.gtm-engine.sh/api/v0` |
+| `socials-tools` | Socials Tools | socials, profiles, posts, jobs, companies, messaging | `hosted-api-key` | `https://socials.gtm-engine.sh/api/v0` |
 
 ## Env Vars per Dependency
 
@@ -81,18 +81,16 @@ Iterate over the collected dependency IDs. For each one, look up its **Type** in
 1. **Ask the user for their email**: Prompt them for the email to register with.
 2. **Request a verification code** via the `get_api_key` tool:
    ```bash
-   curl -s -X POST "https://gtm-engine.sh/mcp" \
+   curl -s -X POST "https://gtm-engine.sh/api/v0/get_api_key" \
      -H "Content-Type: application/json" \
-     -H "Accept: application/json, text/event-stream" \
-     -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_api_key","arguments":{"email":"USER_EMAIL"}},"id":1}'
+     -d '{"email":"USER_EMAIL"}'
    ```
 3. **Ask the user for the 6-digit code** they received by email.
 4. **Submit the code** to get the API key:
    ```bash
-   curl -s -X POST "https://gtm-engine.sh/mcp" \
+   curl -s -X POST "https://gtm-engine.sh/api/v0/get_api_key" \
      -H "Content-Type: application/json" \
-     -H "Accept: application/json, text/event-stream" \
-     -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_api_key","arguments":{"email":"USER_EMAIL","code":"CODE"}},"id":1}'
+     -d '{"email":"USER_EMAIL","code":"CODE"}'
    ```
 5. **Store the key** for use in Step 4.
 
@@ -102,7 +100,7 @@ For each deployed dependency, export the required environment variables so they 
 
 **For outbound-tools:**
 ```bash
-export OUTBOUND_TOOLS_URL="https://<railway-domain>/mcp"
+export OUTBOUND_TOOLS_URL="https://<railway-domain>"
 export OUTBOUND_API_KEY="<the API_KEY from Step 3>"
 ```
 
@@ -128,31 +126,26 @@ Smoke-test each configured server:
 
 **For outbound-tools:**
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/list_email_accounts" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"list_email_accounts","arguments":{}},"id":1}' \
-  | jq -r '.result.content[0].text'
+  -d '{}' | jq .
 ```
 
 **For signals-tools:**
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+curl -s -X POST "https://signals.gtm-engine.sh/api/v0/detect_signal" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"detect_signal","arguments":{"domain":"gymshark.com"}},"id":1}' \
-  | jq -r '.result.content[0].text'
+  -d '{"domain":"gymshark.com"}' | jq .
 ```
 
 **For socials-tools:**
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/ping" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"ping","arguments":{}},"id":1}' \
-  | jq -r '.result.content[0].text'
+  -d '{}' | jq .
 ```
 
 Present a summary table to the user:
@@ -160,8 +153,8 @@ Present a summary table to the user:
 | Dependency | Status | Endpoint |
 |------------|--------|----------|
 | Outbound Tools | OK / Failed | `https://...` |
-| Signals Tools | OK / Failed | `https://signals.gtm-engine.sh/mcp` |
-| Socials Tools | OK / Failed | `https://socials.gtm-engine.sh/mcp` |
+| Signals Tools | OK / Failed | `https://signals.gtm-engine.sh/api/v0` |
+| Socials Tools | OK / Failed | `https://socials.gtm-engine.sh/api/v0` |
 
 ---
 

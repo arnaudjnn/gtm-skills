@@ -7,7 +7,7 @@ metadata:
   homepage: https://gtm-engine.sh
 inputs:
   - name: OUTBOUND_TOOLS_URL
-    description: Endpoint URL for the outbound-tools server (e.g. https://your-app.railway.app/mcp). Required for outbound email operations.
+    description: Base URL for the outbound-tools server (e.g. https://your-app.railway.app). Required for outbound email operations.
     required: false
   - name: OUTBOUND_API_KEY
     description: API key for authenticating with the outbound-tools server. Required for outbound email operations.

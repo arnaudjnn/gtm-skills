@@ -5,7 +5,7 @@ description: Detect buying signals for a company domain via API calls. Scans Tru
 
 # Buying Signals Detection
 
-Detect buying signals for a target company using its domain. All operations use the signals-tools server via **Bash** (`https://signals.gtm-engine.sh/mcp`).
+Detect buying signals for a target company using its domain. All operations use the signals-tools API via **Bash** (`https://signals.gtm-engine.sh/api/v0`).
 
 ## Getting an API Key
 
@@ -13,18 +13,16 @@ To use the signals tools, you need a `GTM_ENGINE_API_KEY`. Obtain one via the `g
 
 **Step 1 — Request a verification code:**
 ```bash
-curl -s -X POST "https://gtm-engine.sh/mcp" \
+curl -s -X POST "https://gtm-engine.sh/api/v0/get_api_key" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_api_key","arguments":{"email":"YOUR_EMAIL"}},"id":1}'
+  -d '{"email":"YOUR_EMAIL"}'
 ```
 
 **Step 2 — Submit the 6-digit code received by email:**
 ```bash
-curl -s -X POST "https://gtm-engine.sh/mcp" \
+curl -s -X POST "https://gtm-engine.sh/api/v0/get_api_key" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_api_key","arguments":{"email":"YOUR_EMAIL","code":"123456"}},"id":1}'
+  -d '{"email":"YOUR_EMAIL","code":"123456"}'
 ```
 
 The response contains your API key. Export it:
@@ -45,12 +43,10 @@ Use the Bash tool to call the API. See `references/tools-reference.md` for the e
 
 **Pattern:**
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/mcp" \
+curl -s -X POST "https://signals.gtm-engine.sh/api/v0/TOOL_NAME" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"TOOL_NAME","arguments":{...}},"id":1}' \
-  | jq -r '.result.content[0].text' | jq .
+  -d '{...arguments...}' | jq .
 ```
 
 Environment variable `GTM_ENGINE_API_KEY` must be set (see **Getting an API Key** above).

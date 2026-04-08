@@ -9,24 +9,23 @@ Complete reference for all 12 tools provided by the outbound-tools server.
 Use the Bash tool to run curl commands. Every call follows this pattern:
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/TOOL_NAME" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"TOOL_NAME","arguments":{...}},"id":1}'
+  -d '{...arguments...}'
 ```
 
-- `$OUTBOUND_TOOLS_URL`:the server endpoint (set during setup)
+- `$OUTBOUND_TOOLS_URL`:the server base URL (set during setup)
 - `$OUTBOUND_API_KEY`:the API key for authentication (set during setup)
-- The response JSON contains the result in `result.content[0].text` (parse with `jq`)
+- The response is direct JSON (parse with `jq .`)
 
 ### Tip: parse responses with jq
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/list_email_accounts" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"list_email_accounts","arguments":{}},"id":1}' \
-  | jq -r '.result.content[0].text' | jq .
+  -d '{}' | jq .
 ```
 
 ---
@@ -36,10 +35,10 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 List all registered mailbox accounts.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/list_email_accounts" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"list_email_accounts","arguments":{}},"id":1}'
+  -d '{}'
 ```
 
 **Returns:** Array of account objects:
@@ -59,19 +58,14 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 Send an email via SMTP. The sent message is automatically copied to the Sent folder.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/send_email" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"send_email",
-      "arguments":{
-        "from":"sender@domain.com",
-        "to":["recipient@example.com"],
-        "subject":"Hello",
-        "text":"Plain text body"
-      }
-    },"id":1
+    "from":"sender@domain.com",
+    "to":["recipient@example.com"],
+    "subject":"Hello",
+    "text":"Plain text body"
   }'
 ```
 
@@ -97,18 +91,13 @@ At least one of `text` or `html` is required.
 Fetch received emails from the INBOX with pagination and optional tag filtering.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/list_received_emails" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_received_emails",
-      "arguments":{
-        "email":"user@domain.com",
-        "limit":50,
-        "page":1
-      }
-    },"id":1
+    "email":"user@domain.com",
+    "limit":50,
+    "page":1
   }'
 ```
 
@@ -131,19 +120,14 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 Fetch sent emails with pagination and optional tag filtering.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/list_sent_emails" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_sent_emails",
-      "arguments":{
-        "email":"user@domain.com",
-        "limit":50,
-        "page":1,
-        "tag_filter":"NOT bounced"
-      }
-    },"id":1
+    "email":"user@domain.com",
+    "limit":50,
+    "page":1,
+    "tag_filter":"NOT bounced"
   }'
 ```
 
@@ -164,17 +148,12 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 Match received inbox emails to their original sent emails. Useful for identifying which outbound emails got replies.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/find_reply_threads" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"find_reply_threads",
-      "arguments":{
-        "email":"user@domain.com",
-        "unclassifiedOnly":true
-      }
-    },"id":1
+    "email":"user@domain.com",
+    "unclassifiedOnly":true
   }'
 ```
 
@@ -198,15 +177,10 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 Get bounce, complaint, and interest rate metrics for an email account.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/list_metrics" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_metrics",
-      "arguments":{"email":"user@domain.com"}
-    },"id":1
-  }'
+  -d '{"email":"user@domain.com"}'
 ```
 
 **Parameters:**
@@ -232,19 +206,14 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 Add an IMAP keyword (tag) to an email message.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/add_email_tag" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"add_email_tag",
-      "arguments":{
-        "email":"user@domain.com",
-        "uid":123,
-        "tag":"interested",
-        "folder":"INBOX"
-      }
-    },"id":1
+    "email":"user@domain.com",
+    "uid":123,
+    "tag":"interested",
+    "folder":"INBOX"
   }'
 ```
 
@@ -265,19 +234,14 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 Remove an IMAP keyword (tag) from an email message.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/remove_email_tag" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"remove_email_tag",
-      "arguments":{
-        "email":"user@domain.com",
-        "uid":123,
-        "tag":"interested",
-        "folder":"INBOX"
-      }
-    },"id":1
+    "email":"user@domain.com",
+    "uid":123,
+    "tag":"interested",
+    "folder":"INBOX"
   }'
 ```
 
@@ -298,17 +262,12 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 Add a contact email to one or more audience segments. Scans all accounts and folders (INBOX + SENT) for messages involving that contact and tags them.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/add_to_audience" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"add_to_audience",
-      "arguments":{
-        "email":"contact@example.com",
-        "segments":["leads","vip"]
-      }
-    },"id":1
+    "email":"contact@example.com",
+    "segments":["leads","vip"]
   }'
 ```
 
@@ -327,17 +286,12 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 Remove a contact email from audience segments.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/remove_from_audience" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"remove_from_audience",
-      "arguments":{
-        "email":"contact@example.com",
-        "segments":["leads"]
-      }
-    },"id":1
+    "email":"contact@example.com",
+    "segments":["leads"]
   }'
 ```
 
@@ -356,10 +310,10 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL" \
 List all audience segments with their contacts, aggregated across all accounts and folders.
 
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/list_audiences" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"list_audiences","arguments":{}},"id":1}'
+  -d '{}'
 ```
 
 **Parameters:** None

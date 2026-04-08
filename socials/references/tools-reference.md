@@ -9,47 +9,38 @@ Complete reference for all 20 tools provided by the socials-tools server.
 Use the Bash tool to run curl commands. Every call follows this pattern:
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/TOOL_NAME" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"TOOL_NAME","arguments":{...}},"id":1}'
+  -d '{...arguments...}'
 ```
 
-- The server endpoint is `https://socials.gtm-engine.sh/mcp`
+- The API base URL is `https://socials.gtm-engine.sh/api/v0`
 - `$GTM_ENGINE_API_KEY`: the API key for authentication (see the socials SKILL.md for how to obtain one)
-- The response JSON contains the result in `result.content[0].text` (parse with `jq`)
+- The response is direct JSON (parse with `jq .`)
 
 ### Tip: parse responses with jq
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_profile" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"get_linkedin_profile","arguments":{"username":"rauchg"}},"id":1}' \
-  | jq -r '.result.content[0].text' | jq .
+  -d '{"username":"rauchg"}' | jq .
 ```
 
 ---
 
 ## ping
 
-Health check for the MCP server.
+Health check for the API server.
 
 **Cost:** 0 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/ping" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"ping",
-      "arguments":{}
-    },"id":1
-  }'
+  -d '{}'
 ```
 
 **Parameters:** None.
@@ -59,7 +50,7 @@ curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
 |-------|------|-------------|
 | result | string | Always `"pong"` |
 | timestamp | string | Current server timestamp |
-| message | string | Always `"MCP server is healthy"` |
+| message | string | Always `"API server is healthy"` |
 
 ---
 
@@ -70,16 +61,10 @@ Returns setup instructions with a curl command for Mac that extracts LinkedIn co
 **Cost:** 0 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/connect_linkedin" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"connect_linkedin",
-      "arguments":{}
-    },"id":1
-  }'
+  -d '{}'
 ```
 
 **Parameters:** None.
@@ -95,16 +80,10 @@ Lists all LinkedIn accounts currently connected to the API.
 **Cost:** 0 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_connected_linkedin_accounts" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_connected_linkedin_accounts",
-      "arguments":{}
-    },"id":1
-  }'
+  -d '{}'
 ```
 
 **Parameters:** None.
@@ -133,16 +112,10 @@ Finds the LinkedIn company page URL for a given domain.
 **Cost:** 2 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_company_url" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"get_linkedin_company_url",
-      "arguments":{"domain":"gymshark.com"}
-    },"id":1
-  }'
+  -d '{"domain":"gymshark.com"}'
 ```
 
 **Parameters:**
@@ -165,16 +138,10 @@ Finds a person's LinkedIn profile URL given their name and company domain.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_profile_url" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"get_linkedin_profile_url",
-      "arguments":{"name":"Arnaud Jeannin","domain":"gorgias.com"}
-    },"id":1
-  }'
+  -d '{"name":"Arnaud Jeannin","domain":"gorgias.com"}'
 ```
 
 **Parameters:**
@@ -200,16 +167,10 @@ Retrieves a LinkedIn user's full profile including experiences and education.
 **Cost:** 2 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_profile" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"get_linkedin_profile",
-      "arguments":{"username":"rauchg"}
-    },"id":1
-  }'
+  -d '{"username":"rauchg"}'
 ```
 
 **Parameters:**
@@ -236,16 +197,10 @@ Retrieves a single LinkedIn post by URL or activity URN.
 **Cost:** 2 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_post" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"get_linkedin_post",
-      "arguments":{"url":"urn:li:activity:7654321098765432100"}
-    },"id":1
-  }'
+  -d '{"url":"urn:li:activity:7654321098765432100"}'
 ```
 
 **Parameters:**
@@ -273,16 +228,10 @@ Retrieves a single LinkedIn job posting by ID.
 **Cost:** 2 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_job" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"get_linkedin_job",
-      "arguments":{"job_id":"4356405688"}
-    },"id":1
-  }'
+  -d '{"job_id":"4356405688"}'
 ```
 
 **Parameters:**
@@ -309,16 +258,10 @@ Lists recent posts from a LinkedIn user.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_user_posts" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_user_posts",
-      "arguments":{"username":"rauchg","limit":10}
-    },"id":1
-  }'
+  -d '{"username":"rauchg","limit":10}'
 ```
 
 **Parameters:**
@@ -342,18 +285,12 @@ Lists job postings for a company, optionally filtered by title keywords.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_jobs" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_linkedin_jobs",
-      "arguments":{
-        "domain":"gymshark.com",
-        "filter":"(cx OR customer support) NOT junior"
-      }
-    },"id":1
+    "domain":"gymshark.com",
+    "filter":"(cx OR customer support) NOT junior"
   }'
 ```
 
@@ -399,16 +336,10 @@ Lists employees of a LinkedIn company page with pagination.
 **Cost:** 30 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_company_employees" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_linkedin_company_employees",
-      "arguments":{"company":"vercel","start":0,"count":10}
-    },"id":1
-  }'
+  -d '{"company":"vercel","start":0,"count":10}'
 ```
 
 **Parameters:**
@@ -429,16 +360,10 @@ Lists reactions on a LinkedIn post with pagination.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_post_reactions" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_linkedin_post_reactions",
-      "arguments":{"post":"urn:li:activity:7654321098765432100","start":0,"count":10}
-    },"id":1
-  }'
+  -d '{"post":"urn:li:activity:7654321098765432100","start":0,"count":10}'
 ```
 
 **Parameters:**
@@ -465,16 +390,10 @@ Lists comments on a LinkedIn post with pagination and sorting.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_post_comments" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_linkedin_post_comments",
-      "arguments":{"post":"urn:li:activity:7654321098765432100","start":0,"count":10,"sort":"RELEVANCE"}
-    },"id":1
-  }'
+  -d '{"post":"urn:li:activity:7654321098765432100","start":0,"count":10,"sort":"RELEVANCE"}'
 ```
 
 **Parameters:**
@@ -504,19 +423,13 @@ Sends a message on LinkedIn from a connected account.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/send_linkedin_message" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"send_linkedin_message",
-      "arguments":{
-        "senderUsername":"myaccount",
-        "recipientUsername":"rauchg",
-        "message":"Hello! I wanted to reach out about..."
-      }
-    },"id":1
+    "senderUsername":"myaccount",
+    "recipientUsername":"rauchg",
+    "message":"Hello! I wanted to reach out about..."
   }'
 ```
 
@@ -538,19 +451,13 @@ Sends a LinkedIn connection request (invitation) from a connected account, with 
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/send_linkedin_invitation" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"send_linkedin_invitation",
-      "arguments":{
-        "senderUsername":"myaccount",
-        "recipientUsername":"rauchg",
-        "message":"Happy to connect!"
-      }
-    },"id":1
+    "senderUsername":"myaccount",
+    "recipientUsername":"rauchg",
+    "message":"Happy to connect!"
   }'
 ```
 
@@ -572,18 +479,10 @@ Lists the 25 most recent LinkedIn conversations for a connected account. Returns
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_conversations" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_linkedin_conversations",
-      "arguments":{
-        "username":"myaccount"
-      }
-    },"id":1
-  }'
+  -d '{"username":"myaccount"}'
 ```
 
 **Parameters:**
@@ -629,16 +528,10 @@ Lists saved posts for a connected LinkedIn account, enriched with full post data
 **Cost:** 10 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_saved_posts" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_linkedin_saved_posts",
-      "arguments":{"username":"myaccount","limit":10}
-    },"id":1
-  }'
+  -d '{"username":"myaccount","limit":10}'
 ```
 
 **Parameters:**
@@ -664,16 +557,10 @@ Lists recent posts from employees of a given company. Finds active employees and
 **Cost:** 80 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_company_employees_posts" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_linkedin_company_employees_posts",
-      "arguments":{"company":"vercel","max_employees":5,"days_back":7}
-    },"id":1
-  }'
+  -d '{"company":"vercel","max_employees":5,"days_back":7}'
 ```
 
 **Parameters:**
@@ -694,16 +581,10 @@ Gets structured company data from a domain name. Returns company name, descripti
 **Cost:** 2 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_company" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"get_linkedin_company",
-      "arguments":{"domain":"stripe.com"}
-    },"id":1
-  }'
+  -d '{"domain":"stripe.com"}'
 ```
 
 **Parameters:**
@@ -738,16 +619,10 @@ Lists posts from a company's LinkedIn page with engagement metrics.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_company_posts" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
-  -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"list_linkedin_company_posts",
-      "arguments":{"company":"stripe","start":0,"sort":"recent"}
-    },"id":1
-  }'
+  -d '{"company":"stripe","start":0,"sort":"recent"}'
 ```
 
 **Parameters:**
@@ -781,19 +656,13 @@ Searches for key contacts (decision makers) at a company by title keywords. Use 
 **Cost:** 30 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/mcp" \
+curl -s -X POST "https://socials.gtm-engine.sh/api/v0/search_linkedin_company_contacts" \
   -H "Content-Type: application/json" \
-  -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
   -d '{
-    "jsonrpc":"2.0","method":"tools/call","params":{
-      "name":"search_linkedin_company_contacts",
-      "arguments":{
-        "company_id":"2135371",
-        "title_keywords":["CEO","CTO","VP Engineering"],
-        "limit":5
-      }
-    },"id":1
+    "company_id":"2135371",
+    "title_keywords":["CEO","CTO","VP Engineering"],
+    "limit":5
   }'
 ```
 

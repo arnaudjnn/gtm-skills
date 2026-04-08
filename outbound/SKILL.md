@@ -20,11 +20,10 @@ Use the Bash tool to call the API. See `references/tools-reference.md` for the e
 
 **Pattern:**
 ```bash
-curl -s -X POST "$OUTBOUND_TOOLS_URL" \
+curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/TOOL_NAME" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $OUTBOUND_API_KEY" \
-  -d '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"TOOL_NAME","arguments":{...}},"id":1}' \
-  | jq -r '.result.content[0].text' | jq .
+  -d '{...arguments...}' | jq .
 ```
 
 Environment variables `OUTBOUND_TOOLS_URL` and `OUTBOUND_API_KEY` must be set (see `setup` skill).
