@@ -17,7 +17,8 @@
         "./skills/outbound",
         "./skills/signals",
         "./skills/linkedin-copywriter",
-        "./skills/reddit-community-manager"
+        "./skills/reddit-community-manager",
+        "./skills/outbound-sales"
       ]
     }
   ]
