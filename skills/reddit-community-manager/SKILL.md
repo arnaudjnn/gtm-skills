@@ -1,5 +1,5 @@
 ---
-name: reddit
+name: reddit-community-manager
 description: Manage Reddit community engagement for a B2B company via Bash — discover relevant threads, qualify the posters before replying, draft and post comments and posts that don't read as AI spam, send DMs, follow up. Use this skill whenever the user mentions Reddit, mentions a subreddit (r/anything), shares a reddit.com or redd.it URL, asks to find / monitor / reply to / engage with Reddit threads, asks to post on Reddit, asks to DM a Reddit user, mentions Reddit outreach / marketing / community management / monitoring, asks "should I reply to this Reddit post", or asks to check a Reddit user's credibility — even if they don't explicitly say "skill" or name the underlying tools.
 ---
 

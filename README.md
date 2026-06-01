@@ -15,10 +15,10 @@ Install the whole bundle, or any single skill by name:
 npx skills add arnaudjnn/gtm-skills
 
 # Install a single skill
-npx skills add arnaudjnn/gtm-skills --skill reddit
+npx skills add arnaudjnn/gtm-skills --skill reddit-community-manager
 npx skills add arnaudjnn/gtm-skills --skill outbound
 npx skills add arnaudjnn/gtm-skills --skill signals
-npx skills add arnaudjnn/gtm-skills --skill linkedin
+npx skills add arnaudjnn/gtm-skills --skill linkedin-copywriter
 ```
 
 Or via Claude Code's plugin marketplace (uses `.claude-plugin/marketplace.json`):
@@ -35,8 +35,8 @@ Or via Claude Code's plugin marketplace (uses `.claude-plugin/marketplace.json`)
 | [`setup`](./skills/setup) | Interactive setup wizard. First-time setup, deploying servers, configuring API keys. | `./skills/setup` |
 | [`outbound`](./skills/outbound) | Outbound email workflows. Send campaigns, classify replies, follow up with non-responders, clean bounces, generate analytics. Powered by the outbound-tools server (IMAP/SMTP + Mailpool). | `./skills/outbound` |
 | [`signals`](./skills/signals) | Buying-intent signal detection. Scan domains for Trustpilot sentiment, social-media follower spikes, and LinkedIn hiring activity. Powered by gtm-tools.sh. | `./skills/signals` |
-| [`linkedin`](./skills/linkedin) | LinkedIn intelligence — profiles, posts, jobs, company employees, messaging. Powered by gtm-tools.sh. | `./skills/linkedin` |
-| [`reddit`](./skills/reddit) | Reddit community engagement for B2B. Discover relevant threads, qualify posters, draft and post comments that don't read as AI spam, send DMs, follow up. 21 Reddit tools wired into a five-stage loop with the should-I-reply gate, disclosure pattern, no-links rule, and anti-AI-writing scrubber. | `./skills/reddit` |
+| [`linkedin-copywriter`](./skills/linkedin-copywriter) | Ghostwrite LinkedIn posts, comments, connection-request notes, and DMs in the user's voice without AI tells. Voice ingestion + anti-AI scrub + draft-then-paste, with four modes (post / comment / invitation / dm) and char-limit + banned-word guards. | `./skills/linkedin-copywriter` |
+| [`reddit-community-manager`](./skills/reddit-community-manager) | Reddit community engagement for B2B. Discover relevant threads, qualify posters, draft and post comments that don't read as AI spam, send DMs, follow up. 21 Reddit tools wired into a five-stage loop with the should-I-reply gate, disclosure pattern, no-links rule, and anti-AI-writing scrubber. | `./skills/reddit-community-manager` |
 
 ## Usage
 
@@ -46,11 +46,11 @@ Skills auto-activate when relevant prompts come in. Examples:
 - "Classify the replies that came in today" → `outbound`
 - "Scan acme.com for buying signals" → `signals`
 - "What's the Trustpilot sentiment for gymshark.com?" → `signals`
-- "Find a profile on LinkedIn for Justin Mares at Kettle & Fire" → `linkedin`
-- "Send a LinkedIn invitation to ..." → `linkedin`
-- "Find Reddit threads about <pain point>" → `reddit`
-- "Should I reply to this Reddit post?" → `reddit`
-- "DM this Reddit user" → `reddit`
+- "Find a profile on LinkedIn for Justin Mares at Kettle & Fire" → `linkedin-copywriter`
+- "Send a LinkedIn invitation to ..." → `linkedin-copywriter`
+- "Find Reddit threads about <pain point>" → `reddit-community-manager`
+- "Should I reply to this Reddit post?" → `reddit-community-manager`
+- "DM this Reddit user" → `reddit-community-manager`
 
 ## Prerequisites
 
