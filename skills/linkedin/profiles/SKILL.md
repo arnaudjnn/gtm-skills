@@ -24,7 +24,7 @@ See `references/tools-reference.md` for exact commands.
 
 2. **Extract key information**
    - Person: current role, company, tenure, past experience, education, headline
-   - Company: LinkedIn page URL for use with other socials sub-skills
+   - Company: LinkedIn page URL for use with other linkedin sub-skills
 
 3. **Output a structured summary**
    - For profiles: name, headline, current role, notable past experience, education

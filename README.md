@@ -18,7 +18,7 @@ npx skills add arnaudjnn/gtm-skills
 npx skills add arnaudjnn/gtm-skills --skill reddit
 npx skills add arnaudjnn/gtm-skills --skill outbound
 npx skills add arnaudjnn/gtm-skills --skill signals
-npx skills add arnaudjnn/gtm-skills --skill socials
+npx skills add arnaudjnn/gtm-skills --skill linkedin
 ```
 
 Or via Claude Code's plugin marketplace (uses `.claude-plugin/marketplace.json`):
@@ -35,7 +35,7 @@ Or via Claude Code's plugin marketplace (uses `.claude-plugin/marketplace.json`)
 | [`setup`](./skills/setup) | Interactive setup wizard. First-time setup, deploying servers, configuring API keys. | `./skills/setup` |
 | [`outbound`](./skills/outbound) | Outbound email workflows. Send campaigns, classify replies, follow up with non-responders, clean bounces, generate analytics. Powered by the outbound-tools server (IMAP/SMTP + Mailpool). | `./skills/outbound` |
 | [`signals`](./skills/signals) | Buying-intent signal detection. Scan domains for Trustpilot sentiment, social-media follower spikes, and LinkedIn hiring activity. Powered by gtm-tools.sh. | `./skills/signals` |
-| [`socials`](./skills/socials) | LinkedIn intelligence — profiles, posts, jobs, company employees, messaging. Powered by gtm-tools.sh. | `./skills/socials` |
+| [`linkedin`](./skills/linkedin) | LinkedIn intelligence — profiles, posts, jobs, company employees, messaging. Powered by gtm-tools.sh. | `./skills/linkedin` |
 | [`reddit`](./skills/reddit) | Reddit community engagement for B2B. Discover relevant threads, qualify posters, draft and post comments that don't read as AI spam, send DMs, follow up. 21 Reddit tools wired into a five-stage loop with the should-I-reply gate, disclosure pattern, no-links rule, and anti-AI-writing scrubber. | `./skills/reddit` |
 
 ## Usage
@@ -46,8 +46,8 @@ Skills auto-activate when relevant prompts come in. Examples:
 - "Classify the replies that came in today" → `outbound`
 - "Scan acme.com for buying signals" → `signals`
 - "What's the Trustpilot sentiment for gymshark.com?" → `signals`
-- "Find a profile on LinkedIn for Justin Mares at Kettle & Fire" → `socials`
-- "Send a LinkedIn invitation to ..." → `socials`
+- "Find a profile on LinkedIn for Justin Mares at Kettle & Fire" → `linkedin`
+- "Send a LinkedIn invitation to ..." → `linkedin`
 - "Find Reddit threads about <pain point>" → `reddit`
 - "Should I reply to this Reddit post?" → `reddit`
 - "DM this Reddit user" → `reddit`

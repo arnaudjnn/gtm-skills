@@ -1,5 +1,5 @@
 ---
-name: socials
+name: linkedin
 description: LinkedIn social intelligence via API calls. Look up profiles, browse posts, list jobs, map company employees, and send direct messages. Use sub-skills for specific tasks or browse the tools list below.
 ---
 

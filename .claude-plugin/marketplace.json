@@ -16,7 +16,7 @@
         "./skills/setup",
         "./skills/outbound",
         "./skills/signals",
-        "./skills/socials",
+        "./skills/linkedin",
         "./skills/reddit"
       ]
     }

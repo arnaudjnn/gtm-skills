@@ -15,7 +15,7 @@ One row per server dependency. This table is the source of truth for what needs 
 |----|------|-------------|------|----------|
 | `outbound-tools` | Outbound Tools | outbound, classify-replies, send-campaign, follow-up, clean-bounces, analytics | `railway-template` | User's Railway URL |
 | `signals-tools` | Signals Tools | signals, detect-all, reputation, social-growth, hiring | `hosted-api-key` | `https://api.gtm-tools.sh/api/v0` |
-| `socials-tools` | Socials Tools | socials, profiles, posts, jobs, companies, messaging | `hosted-api-key` | `https://api.gtm-tools.sh/api/v0` |
+| `socials-tools` | LinkedIn Tools | linkedin, profiles, posts, jobs, companies, messaging | `hosted-api-key` | `https://api.gtm-tools.sh/api/v0` |
 
 ## Env Vars per Dependency
 
@@ -33,7 +33,7 @@ One row per server dependency. This table is the source of truth for what needs 
 |-------------|---------------|
 | Outbound | `outbound-tools` |
 | Signals | `signals-tools` |
-| Socials | `socials-tools` |
+| LinkedIn | `socials-tools` |
 
 ## Dependency Type Reference
 
