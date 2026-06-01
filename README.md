@@ -14,6 +14,9 @@ Outbound email workflows. Send campaigns, classify replies, follow up with non-r
 ### [`signals`](./signals)
 Buying signal detection. Scan company domains for Trustpilot review sentiment, social media follower spikes (Instagram/TikTok), and LinkedIn hiring activity. Powered by the signals-tools server (gtm-engine.sh).
 
+### [`reddit`](./reddit)
+Reddit community engagement for B2B. Discover relevant threads, qualify posters before replying, draft and post comments that don't read as AI spam, send DMs, follow up. Wires the 21 Reddit tools at `api.gtm-tools.sh` into a five-stage loop (Discover → Evaluate → Engage → Follow up → Organize) with the should-I-reply gate, disclosure pattern, no-links rule, and anti-AI-writing scrubber baked in.
+
 ## Installation
 
 ```bash
