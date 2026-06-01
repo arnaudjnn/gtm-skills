@@ -1,0 +1,24 @@
+{
+  "name": "gtm-tools-skills",
+  "owner": { "name": "Arnaud Jeannin", "email": "arnaud@siena.cx" },
+  "metadata": {
+    "description": "GTM skills using Bash. Outbound email workflows, buying-intent signal detection, LinkedIn social intelligence, and Reddit community engagement.",
+    "version": "1.0.0",
+    "homepage": "https://gtm-tools.sh"
+  },
+  "plugins": [
+    {
+      "name": "gtm-skills",
+      "description": "Full gtm-tools skill catalog — outbound email, buying-intent signals, LinkedIn intelligence, Reddit community engagement, plus the setup wizard.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/setup",
+        "./skills/outbound",
+        "./skills/signals",
+        "./skills/socials",
+        "./skills/reddit"
+      ]
+    }
+  ]
+}

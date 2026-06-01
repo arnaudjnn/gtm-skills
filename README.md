@@ -4,46 +4,59 @@
 
 [![Install with npx skills](https://img.shields.io/badge/npx_skills-add_arnaudjnn/gtm--skills-blue?logo=npm)](https://skills.sh) [![Agent Skills](https://img.shields.io/badge/agent_skills-SKILL.md-8A2BE2)](https://skills.sh) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-A collection of skills for AI coding agents following the Agent Skills format. These skills enable AI agents to run GTM workflows via Bash: outbound email operations and buying signal detection.
-
-## Available Skills
-
-### [`outbound`](./outbound)
-Outbound email workflows. Send campaigns, classify replies, follow up with non-responders, clean bounced contacts, and generate analytics reports. Powered by the outbound-tools server (IMAP/SMTP + Mailpool).
-
-### [`signals`](./signals)
-Buying signal detection. Scan company domains for Trustpilot review sentiment, social media follower spikes (Instagram/TikTok), and LinkedIn hiring activity. Powered by the signals-tools server (gtm-tools.sh).
-
-### [`reddit`](./reddit)
-Reddit community engagement for B2B. Discover relevant threads, qualify posters before replying, draft and post comments that don't read as AI spam, send DMs, follow up. Wires the 21 Reddit tools at `api.gtm-tools.sh` into a five-stage loop (Discover → Evaluate → Engage → Follow up → Organize) with the should-I-reply gate, disclosure pattern, no-links rule, and anti-AI-writing scrubber baked in.
+A collection of skills for AI coding agents following the [Agent Skills](https://skills.sh) format. These skills teach an agent how to run GTM workflows via Bash + curl — outbound email, buying-intent signal detection, LinkedIn intelligence, and Reddit community engagement — against the [gtm-tools.sh](https://gtm-tools.sh) API.
 
 ## Installation
 
+Install the whole bundle, or any single skill by name:
+
 ```bash
+# Install the catalog
 npx skills add arnaudjnn/gtm-skills
+
+# Install a single skill
+npx skills add arnaudjnn/gtm-skills --skill reddit
+npx skills add arnaudjnn/gtm-skills --skill outbound
+npx skills add arnaudjnn/gtm-skills --skill signals
+npx skills add arnaudjnn/gtm-skills --skill socials
 ```
+
+Or via Claude Code's plugin marketplace (uses `.claude-plugin/marketplace.json`):
+
+```
+/plugin marketplace add arnaudjnn/gtm-skills
+/plugin install gtm-skills@gtm-tools-skills
+```
+
+## Available Skills
+
+| Skill | Description | Source |
+|---|---|---|
+| [`setup`](./skills/setup) | Interactive setup wizard. First-time setup, deploying servers, configuring API keys. | `./skills/setup` |
+| [`outbound`](./skills/outbound) | Outbound email workflows. Send campaigns, classify replies, follow up with non-responders, clean bounces, generate analytics. Powered by the outbound-tools server (IMAP/SMTP + Mailpool). | `./skills/outbound` |
+| [`signals`](./skills/signals) | Buying-intent signal detection. Scan domains for Trustpilot sentiment, social-media follower spikes, and LinkedIn hiring activity. Powered by gtm-tools.sh. | `./skills/signals` |
+| [`socials`](./skills/socials) | LinkedIn intelligence — profiles, posts, jobs, company employees, messaging. Powered by gtm-tools.sh. | `./skills/socials` |
+| [`reddit`](./skills/reddit) | Reddit community engagement for B2B. Discover relevant threads, qualify posters, draft and post comments that don't read as AI spam, send DMs, follow up. 21 Reddit tools wired into a five-stage loop with the should-I-reply gate, disclosure pattern, no-links rule, and anti-AI-writing scrubber. | `./skills/reddit` |
 
 ## Usage
 
-Skills are automatically activated when relevant tasks are detected. Example prompts:
+Skills auto-activate when relevant prompts come in. Examples:
 
-- "Send a cold email campaign to our leads segment"
-- "Classify the replies that came in today"
-- "Follow up with prospects who haven't replied in 5 days"
-- "Clean bounced contacts from all audiences"
-- "Generate a campaign performance report"
-- "Scan acme.com for buying signals"
-- "What's the Trustpilot sentiment for gymshark.com?"
-- "Is notion.so hiring CX reps?"
-- "Check Instagram growth for newbrand.com"
+- "Send a cold email campaign to our leads segment" → `outbound`
+- "Classify the replies that came in today" → `outbound`
+- "Scan acme.com for buying signals" → `signals`
+- "What's the Trustpilot sentiment for gymshark.com?" → `signals`
+- "Find a profile on LinkedIn for Justin Mares at Kettle & Fire" → `socials`
+- "Send a LinkedIn invitation to ..." → `socials`
+- "Find Reddit threads about <pain point>" → `reddit`
+- "Should I reply to this Reddit post?" → `reddit`
+- "DM this Reddit user" → `reddit`
 
 ## Prerequisites
 
-- The outbound-tools server deployed on Railway for outbound skills
-- Mailpool API key stored as `MAILPOOL_API_KEY` environment variable
-- An API key for gtm-tools.sh for signal skills (see the [signals skill](./signals) for setup)
-
-See the root [SKILL.md](./SKILL.md) for deployment instructions.
+- `GTM_TOOLS_API_KEY` set in your environment. Obtain via `get_api_key` at https://gtm-tools.sh or `gtm-tools admin login` from the [`gtm-tools` CLI](https://gtm-tools.sh/documentation/integrations/cli).
+- The [GTM Tools browser extension](https://gtm-tools.sh/extension) connected if you'll use LinkedIn write tools or Reddit write tools (both need a pooled browser session).
+- For outbound: the outbound-tools server deployed on Railway + `MAILPOOL_API_KEY` set. See [`./skills/setup`](./skills/setup).
 
 ## License
 
