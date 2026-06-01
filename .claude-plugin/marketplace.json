@@ -1,6 +1,6 @@
 {
-  "name": "gtm-tools-skills",
-  "owner": { "name": "Arnaud Jeannin", "email": "arnaud@siena.cx" },
+  "name": "gtm-skills",
+  "owner": { "name": "Arnaud Jeannin", "email": "arnaud@gtm-tools.sh" },
   "metadata": {
     "description": "GTM skills using Bash. Outbound email workflows, buying-intent signal detection, LinkedIn social intelligence, and Reddit community engagement.",
     "version": "1.0.0",

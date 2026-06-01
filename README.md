@@ -26,7 +26,7 @@ Or via Claude Code's plugin marketplace (uses `.claude-plugin/marketplace.json`)
 
 ```
 /plugin marketplace add arnaudjnn/gtm-skills
-/plugin install gtm-skills@gtm-tools-skills
+/plugin install gtm-skills@gtm-skills
 ```
 
 ## Available Skills
