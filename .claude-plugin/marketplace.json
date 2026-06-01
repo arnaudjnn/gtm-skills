@@ -13,12 +13,9 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/setup",
-        "./skills/outbound",
-        "./skills/signals",
+        "./skills/outbound-sales",
         "./skills/linkedin-copywriter",
-        "./skills/reddit-community-manager",
-        "./skills/outbound-sales"
+        "./skills/reddit-community-manager"
       ]
     }
   ]
