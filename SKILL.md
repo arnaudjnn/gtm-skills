@@ -1,6 +1,6 @@
 ---
 name: gtm-skills
-description: GTM skills using Bash. Outbound email workflows (campaigns, reply classification, follow-ups, bounce cleanup, analytics), buying signal detection (Trustpilot reviews, social media spikes, LinkedIn hiring), and LinkedIn social intelligence (profiles, posts, jobs, companies, messaging).
+description: GTM skills using Bash. Outbound email workflows (campaigns, reply classification, follow-ups, bounce cleanup, analytics), buying signal detection (Trustpilot reviews, social media spikes, LinkedIn hiring), LinkedIn social intelligence (profiles, posts, jobs, companies, messaging), and Reddit community engagement (thread discovery, poster qualification, posting, commenting, voting, DMs, follow-ups with anti-AI-spam quality rules).
 metadata:
   author: arnaudjnn
   version: "1.0.0"
@@ -14,6 +14,9 @@ inputs:
     required: false
   - name: GTM_ENGINE_API_KEY
     description: API key for GTM Engine servers (signals.gtm-engine.sh and socials.gtm-engine.sh). Obtain one via the get_api_key tool on gtm-engine.sh (see setup sub-skill).
+    required: false
+  - name: GTM_TOOLS_API_KEY
+    description: API key for api.gtm-tools.sh. Required for the reddit sub-skill. Obtain one via the get_api_key tool on gtm-tools.sh or `gtm-tools admin login` from the CLI.
     required: false
   - name: MAILPOOL_API_KEY
     description: Mailpool API key for deploying the outbound-tools server on Railway. Only needed during setup.
@@ -39,6 +42,7 @@ All tools are called in the Bash tool. Just set the endpoint URL and API key as 
 | [`outbound`](./outbound) | Outbound email workflows   | Sending emails, campaigns, reply classification, follow-ups, bounce cleanup, analytics   |
 | [`signals`](./signals)   | Buying signal detection     | Scanning domains for buying signals (Trustpilot reviews, social spikes, LinkedIn hiring) |
 | [`socials`](./socials)   | LinkedIn social intelligence | LinkedIn profiles, posts, jobs, company employees, and messaging                        |
+| [`reddit`](./reddit)     | Reddit community engagement  | Reddit thread discovery, poster qualification, posting, commenting, voting, DMs, follow-ups — anything involving reddit.com / r/<sub> / a Reddit URL |
 
 ## Quick Routing
 
@@ -49,6 +53,8 @@ All tools are called in the Bash tool. Just set the endpoint URL and API key as 
 **Looking for buying signals on a domain?** → `signals`
 
 **LinkedIn research, posts, or messaging?** → `socials`
+
+**Reddit threads, posts, comments, DMs, monitoring?** → `reddit`
 
 ## Common Setup
 
