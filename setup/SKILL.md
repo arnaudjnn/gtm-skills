@@ -14,8 +14,8 @@ One row per server dependency. This table is the source of truth for what needs 
 | ID | Name | Required By | Type | Endpoint |
 |----|------|-------------|------|----------|
 | `outbound-tools` | Outbound Tools | outbound, classify-replies, send-campaign, follow-up, clean-bounces, analytics | `railway-template` | User's Railway URL |
-| `signals-tools` | Signals Tools | signals, detect-all, reputation, social-growth, hiring | `hosted-api-key` | `https://signals.gtm-engine.sh/api/v0` |
-| `socials-tools` | Socials Tools | socials, profiles, posts, jobs, companies, messaging | `hosted-api-key` | `https://socials.gtm-engine.sh/api/v0` |
+| `signals-tools` | Signals Tools | signals, detect-all, reputation, social-growth, hiring | `hosted-api-key` | `https://api.gtm-tools.sh/api/v0` |
+| `socials-tools` | Socials Tools | socials, profiles, posts, jobs, companies, messaging | `hosted-api-key` | `https://api.gtm-tools.sh/api/v0` |
 
 ## Env Vars per Dependency
 
@@ -24,8 +24,8 @@ One row per server dependency. This table is the source of truth for what needs 
 | `outbound-tools` | `MAILPOOL_API_KEY` | Ask user | Yes |
 | `outbound-tools` | `API_KEY` | Auto-generate (random 32-char hex) | Yes |
 | `outbound-tools` | `ANTHROPIC_API_KEY` | Ask user | No |
-| `signals-tools` | `GTM_ENGINE_API_KEY` | Ask user | Yes |
-| `socials-tools` | `GTM_ENGINE_API_KEY` | Ask user | Yes |
+| `signals-tools` | `GTM_TOOLS_API_KEY` | Ask user | Yes |
+| `socials-tools` | `GTM_TOOLS_API_KEY` | Ask user | Yes |
 
 ## Skill Group Mapping
 
@@ -81,14 +81,14 @@ Iterate over the collected dependency IDs. For each one, look up its **Type** in
 1. **Ask the user for their email**: Prompt them for the email to register with.
 2. **Request a verification code** via the `get_api_key` tool:
    ```bash
-   curl -s -X POST "https://gtm-engine.sh/api/v0/get_api_key" \
+   curl -s -X POST "https://gtm-tools.sh/api/v0/get_api_key" \
      -H "Content-Type: application/json" \
      -d '{"email":"USER_EMAIL"}'
    ```
 3. **Ask the user for the 6-digit code** they received by email.
 4. **Submit the code** to get the API key:
    ```bash
-   curl -s -X POST "https://gtm-engine.sh/api/v0/get_api_key" \
+   curl -s -X POST "https://gtm-tools.sh/api/v0/get_api_key" \
      -H "Content-Type: application/json" \
      -d '{"email":"USER_EMAIL","code":"CODE"}'
    ```
@@ -106,15 +106,15 @@ export OUTBOUND_API_KEY="<the API_KEY from Step 3>"
 
 **For signals-tools:**
 ```bash
-export GTM_ENGINE_API_KEY="<the key from Step 3>"
+export GTM_TOOLS_API_KEY="<the key from Step 3>"
 ```
 
 **For socials-tools:**
 ```bash
-export GTM_ENGINE_API_KEY="<the key from Step 3>"
+export GTM_TOOLS_API_KEY="<the key from Step 3>"
 ```
 
-> Note: `signals-tools` and `socials-tools` share the same `GTM_ENGINE_API_KEY`. If both are selected, the key only needs to be obtained once.
+> Note: `signals-tools` and `socials-tools` share the same `GTM_TOOLS_API_KEY`. If both are selected, the key only needs to be obtained once.
 
 Write these exports to the user's shell profile (`~/.zshrc`, `~/.bashrc`, or `~/.profile`) so they persist across sessions. Ask the user which file to use, or detect their shell.
 
@@ -134,17 +134,17 @@ curl -s -X POST "$OUTBOUND_TOOLS_URL/api/v0/list_email_accounts" \
 
 **For signals-tools:**
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/detect_signal" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/detect_signal" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}' | jq .
 ```
 
 **For socials-tools:**
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/ping" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/ping" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{}' | jq .
 ```
 
@@ -153,8 +153,8 @@ Present a summary table to the user:
 | Dependency | Status | Endpoint |
 |------------|--------|----------|
 | Outbound Tools | OK / Failed | `https://...` |
-| Signals Tools | OK / Failed | `https://signals.gtm-engine.sh/api/v0` |
-| Socials Tools | OK / Failed | `https://socials.gtm-engine.sh/api/v0` |
+| Signals Tools | OK / Failed | `https://api.gtm-tools.sh/api/v0` |
+| Socials Tools | OK / Failed | `https://api.gtm-tools.sh/api/v0` |
 
 ---
 

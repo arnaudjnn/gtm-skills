@@ -12,7 +12,7 @@ A collection of skills for AI coding agents following the Agent Skills format. T
 Outbound email workflows. Send campaigns, classify replies, follow up with non-responders, clean bounced contacts, and generate analytics reports. Powered by the outbound-tools server (IMAP/SMTP + Mailpool).
 
 ### [`signals`](./signals)
-Buying signal detection. Scan company domains for Trustpilot review sentiment, social media follower spikes (Instagram/TikTok), and LinkedIn hiring activity. Powered by the signals-tools server (gtm-engine.sh).
+Buying signal detection. Scan company domains for Trustpilot review sentiment, social media follower spikes (Instagram/TikTok), and LinkedIn hiring activity. Powered by the signals-tools server (gtm-tools.sh).
 
 ### [`reddit`](./reddit)
 Reddit community engagement for B2B. Discover relevant threads, qualify posters before replying, draft and post comments that don't read as AI spam, send DMs, follow up. Wires the 21 Reddit tools at `api.gtm-tools.sh` into a five-stage loop (Discover → Evaluate → Engage → Follow up → Organize) with the should-I-reply gate, disclosure pattern, no-links rule, and anti-AI-writing scrubber baked in.
@@ -41,7 +41,7 @@ Skills are automatically activated when relevant tasks are detected. Example pro
 
 - The outbound-tools server deployed on Railway for outbound skills
 - Mailpool API key stored as `MAILPOOL_API_KEY` environment variable
-- An API key for gtm-engine.sh for signal skills (see the [signals skill](./signals) for setup)
+- An API key for gtm-tools.sh for signal skills (see the [signals skill](./signals) for setup)
 
 See the root [SKILL.md](./SKILL.md) for deployment instructions.
 

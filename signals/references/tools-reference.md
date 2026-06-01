@@ -9,22 +9,22 @@ Complete reference for all 13 tools provided by the signals-tools server.
 Use the Bash tool to run curl commands. Every call follows this pattern:
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/TOOL_NAME" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/TOOL_NAME" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{...arguments...}'
 ```
 
-- The API base URL is `https://signals.gtm-engine.sh/api/v0`
-- `$GTM_ENGINE_API_KEY`: the API key for authentication (see the signals SKILL.md for how to obtain one)
+- The API base URL is `https://api.gtm-tools.sh/api/v0`
+- `$GTM_TOOLS_API_KEY`: the API key for authentication (see the signals SKILL.md for how to obtain one)
 - The response is direct JSON (parse with `jq .`)
 
 ### Tip: parse responses with jq
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/detect_signal" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/detect_signal" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}' | jq .
 ```
 
@@ -37,9 +37,9 @@ Runs multiple signal detections for a company domain and returns only the ones t
 **Cost:** 15 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/detect_signal" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/detect_signal" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}'
 ```
 
@@ -75,9 +75,9 @@ Detects negative Trustpilot reviews for a company in the last 30 days. A review 
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/signal_trustpilot_negative_reviews" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/signal_trustpilot_negative_reviews" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}'
 ```
 
@@ -104,9 +104,9 @@ Detects negative Trustpilot reviews that mention customer support. Same as `sign
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/signal_trustpilot_negative_support_reviews" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/signal_trustpilot_negative_support_reviews" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}'
 ```
 
@@ -126,9 +126,9 @@ Detects positive Trustpilot reviews for a company in the last 30 days. A review 
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/signal_trustpilot_positive_reviews" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/signal_trustpilot_positive_reviews" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}'
 ```
 
@@ -170,9 +170,9 @@ Detects significant follower spikes on Instagram and/or TikTok over a 14-day win
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/signal_socials_spike" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/signal_socials_spike" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}'
 ```
 
@@ -220,9 +220,9 @@ Detects whether a company is hiring for roles matching given job title filters v
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/signal_hiring_role" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/signal_hiring_role" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{
     "domain":"gymshark.com",
     "job_title_filters":"(cx OR customer support) NOT junior"
@@ -271,9 +271,9 @@ Detects whether a company is hiring for customer support / CX roles. Preset filt
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/signal_hiring_support" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/signal_hiring_support" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}'
 ```
 
@@ -293,9 +293,9 @@ Detects whether a company is actively hiring SDRs or BDRs. Preset filter: SDR, B
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/signal_hiring_sales_rep" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/signal_hiring_sales_rep" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}'
 ```
 
@@ -315,9 +315,9 @@ Detects whether a company is hiring sales leadership or RevOps roles. Preset fil
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/signal_hiring_sales_leadership" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/signal_hiring_sales_leadership" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}'
 ```
 
@@ -337,9 +337,9 @@ Detects whether a company has reposted SDR/BDR roles within the last 60 days. Tr
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/signal_hiring_sales_rep_repost" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/signal_hiring_sales_rep_repost" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}'
 ```
 
@@ -359,9 +359,9 @@ Detects whether specific technologies are used on a website by crawling HTML and
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/signal_technologies_identified" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/signal_technologies_identified" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{
     "domain":"mammaly.de",
     "technologies":["zendesk.com","intercom.io","digitalgenius.com"]
@@ -399,9 +399,9 @@ Sets the order in which `detect_signal` runs signal checks for your workspace. S
 **Cost:** 0 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/set_signals_order" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/set_signals_order" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{
     "order":["signal_socials_spike","signal_hiring_role"]
   }'
@@ -427,9 +427,9 @@ Returns the current signal execution order for your workspace.
 **Cost:** 0 tokens
 
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/get_signals_order" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/get_signals_order" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{}'
 ```
 

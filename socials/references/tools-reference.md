@@ -9,22 +9,22 @@ Complete reference for all 20 tools provided by the socials-tools server.
 Use the Bash tool to run curl commands. Every call follows this pattern:
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/TOOL_NAME" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/TOOL_NAME" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{...arguments...}'
 ```
 
-- The API base URL is `https://socials.gtm-engine.sh/api/v0`
-- `$GTM_ENGINE_API_KEY`: the API key for authentication (see the socials SKILL.md for how to obtain one)
+- The API base URL is `https://api.gtm-tools.sh/api/v0`
+- `$GTM_TOOLS_API_KEY`: the API key for authentication (see the socials SKILL.md for how to obtain one)
 - The response is direct JSON (parse with `jq .`)
 
 ### Tip: parse responses with jq
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_profile" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/get_linkedin_profile" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"username":"rauchg"}' | jq .
 ```
 
@@ -37,9 +37,9 @@ Health check for the API server.
 **Cost:** 0 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/ping" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/ping" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{}'
 ```
 
@@ -61,9 +61,9 @@ Returns setup instructions with a curl command for Mac that extracts LinkedIn co
 **Cost:** 0 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/connect_linkedin" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/connect_linkedin" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{}'
 ```
 
@@ -80,9 +80,9 @@ Lists all LinkedIn accounts currently connected to the API.
 **Cost:** 0 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_connected_linkedin_accounts" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/list_connected_linkedin_accounts" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{}'
 ```
 
@@ -112,9 +112,9 @@ Finds the LinkedIn company page URL for a given domain.
 **Cost:** 2 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_company_url" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/get_linkedin_company_url" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"gymshark.com"}'
 ```
 
@@ -138,9 +138,9 @@ Finds a person's LinkedIn profile URL given their name and company domain.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_profile_url" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/get_linkedin_profile_url" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"name":"Arnaud Jeannin","domain":"gorgias.com"}'
 ```
 
@@ -167,9 +167,9 @@ Retrieves a LinkedIn user's full profile including experiences and education.
 **Cost:** 2 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_profile" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/get_linkedin_profile" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"username":"rauchg"}'
 ```
 
@@ -197,9 +197,9 @@ Retrieves a single LinkedIn post by URL or activity URN.
 **Cost:** 2 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_post" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/get_linkedin_post" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"url":"urn:li:activity:7654321098765432100"}'
 ```
 
@@ -228,9 +228,9 @@ Retrieves a single LinkedIn job posting by ID.
 **Cost:** 2 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_job" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/get_linkedin_job" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"job_id":"4356405688"}'
 ```
 
@@ -258,9 +258,9 @@ Lists recent posts from a LinkedIn user.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_user_posts" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/list_user_posts" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"username":"rauchg","limit":10}'
 ```
 
@@ -285,9 +285,9 @@ Lists job postings for a company, optionally filtered by title keywords.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_jobs" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/list_linkedin_jobs" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{
     "domain":"gymshark.com",
     "filter":"(cx OR customer support) NOT junior"
@@ -336,9 +336,9 @@ Lists employees of a LinkedIn company page with pagination.
 **Cost:** 30 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_company_employees" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/list_linkedin_company_employees" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"company":"vercel","start":0,"count":10}'
 ```
 
@@ -360,9 +360,9 @@ Lists reactions on a LinkedIn post with pagination.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_post_reactions" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/list_linkedin_post_reactions" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"post":"urn:li:activity:7654321098765432100","start":0,"count":10}'
 ```
 
@@ -390,9 +390,9 @@ Lists comments on a LinkedIn post with pagination and sorting.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_post_comments" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/list_linkedin_post_comments" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"post":"urn:li:activity:7654321098765432100","start":0,"count":10,"sort":"RELEVANCE"}'
 ```
 
@@ -423,9 +423,9 @@ Sends a message on LinkedIn from a connected account.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/send_linkedin_message" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/send_linkedin_message" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{
     "senderUsername":"myaccount",
     "recipientUsername":"rauchg",
@@ -451,9 +451,9 @@ Sends a LinkedIn connection request (invitation) from a connected account, with 
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/send_linkedin_invitation" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/send_linkedin_invitation" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{
     "senderUsername":"myaccount",
     "recipientUsername":"rauchg",
@@ -479,9 +479,9 @@ Lists the 25 most recent LinkedIn conversations for a connected account. Returns
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_conversations" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/list_linkedin_conversations" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"username":"myaccount"}'
 ```
 
@@ -528,9 +528,9 @@ Lists saved posts for a connected LinkedIn account, enriched with full post data
 **Cost:** 10 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_saved_posts" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/list_linkedin_saved_posts" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"username":"myaccount","limit":10}'
 ```
 
@@ -557,9 +557,9 @@ Lists recent posts from employees of a given company. Finds active employees and
 **Cost:** 80 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_company_employees_posts" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/list_linkedin_company_employees_posts" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"company":"vercel","max_employees":5,"days_back":7}'
 ```
 
@@ -581,9 +581,9 @@ Gets structured company data from a domain name. Returns company name, descripti
 **Cost:** 2 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/get_linkedin_company" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/get_linkedin_company" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"domain":"stripe.com"}'
 ```
 
@@ -619,9 +619,9 @@ Lists posts from a company's LinkedIn page with engagement metrics.
 **Cost:** 5 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/list_linkedin_company_posts" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/list_linkedin_company_posts" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{"company":"stripe","start":0,"sort":"recent"}'
 ```
 
@@ -656,9 +656,9 @@ Searches for key contacts (decision makers) at a company by title keywords. Use 
 **Cost:** 30 tokens
 
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/search_linkedin_company_contacts" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/search_linkedin_company_contacts" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{
     "company_id":"2135371",
     "title_keywords":["CEO","CTO","VP Engineering"],

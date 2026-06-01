@@ -5,7 +5,7 @@ description: LinkedIn social intelligence via API calls. Look up profiles, brows
 
 # LinkedIn Social Intelligence
 
-Research LinkedIn profiles, posts, jobs, and companies, plus send direct messages. All operations use the socials-tools API via **Bash** (`https://socials.gtm-engine.sh/api/v0`).
+Research LinkedIn profiles, posts, jobs, and companies, plus send direct messages. All operations use the socials-tools API via **Bash** (`https://api.gtm-tools.sh/api/v0`).
 
 ## LinkedIn Account Setup
 
@@ -22,13 +22,13 @@ Use the Bash tool to call the API. See `references/tools-reference.md` for the e
 
 **Pattern:**
 ```bash
-curl -s -X POST "https://socials.gtm-engine.sh/api/v0/TOOL_NAME" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/TOOL_NAME" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{...arguments...}' | jq .
 ```
 
-Environment variable `GTM_ENGINE_API_KEY` must be set (see the **setup** skill or **Getting an API Key** in the signals skill).
+Environment variable `GTM_TOOLS_API_KEY` must be set (see the **setup** skill or **Getting an API Key** in the signals skill).
 
 ## Available Tools
 

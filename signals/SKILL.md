@@ -5,29 +5,29 @@ description: Detect buying signals for a company domain via API calls. Scans Tru
 
 # Buying Signals Detection
 
-Detect buying signals for a target company using its domain. All operations use the signals-tools API via **Bash** (`https://signals.gtm-engine.sh/api/v0`).
+Detect buying signals for a target company using its domain. All operations use the signals-tools API via **Bash** (`https://api.gtm-tools.sh/api/v0`).
 
 ## Getting an API Key
 
-To use the signals tools, you need a `GTM_ENGINE_API_KEY`. Obtain one via the `get_api_key` tool:
+To use the signals tools, you need a `GTM_TOOLS_API_KEY`. Obtain one via the `get_api_key` tool:
 
 **Step 1 — Request a verification code:**
 ```bash
-curl -s -X POST "https://gtm-engine.sh/api/v0/get_api_key" \
+curl -s -X POST "https://gtm-tools.sh/api/v0/get_api_key" \
   -H "Content-Type: application/json" \
   -d '{"email":"YOUR_EMAIL"}'
 ```
 
 **Step 2 — Submit the 6-digit code received by email:**
 ```bash
-curl -s -X POST "https://gtm-engine.sh/api/v0/get_api_key" \
+curl -s -X POST "https://gtm-tools.sh/api/v0/get_api_key" \
   -H "Content-Type: application/json" \
   -d '{"email":"YOUR_EMAIL","code":"123456"}'
 ```
 
 The response contains your API key. Export it:
 ```bash
-export GTM_ENGINE_API_KEY="<your-key>"
+export GTM_TOOLS_API_KEY="<your-key>"
 ```
 
 ## Architecture
@@ -43,13 +43,13 @@ Use the Bash tool to call the API. See `references/tools-reference.md` for the e
 
 **Pattern:**
 ```bash
-curl -s -X POST "https://signals.gtm-engine.sh/api/v0/TOOL_NAME" \
+curl -s -X POST "https://api.gtm-tools.sh/api/v0/TOOL_NAME" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $GTM_ENGINE_API_KEY" \
+  -H "Authorization: Bearer $GTM_TOOLS_API_KEY" \
   -d '{...arguments...}' | jq .
 ```
 
-Environment variable `GTM_ENGINE_API_KEY` must be set (see **Getting an API Key** above).
+Environment variable `GTM_TOOLS_API_KEY` must be set (see **Getting an API Key** above).
 
 ## Available Tools
 

@@ -4,7 +4,7 @@ description: GTM skills using Bash. Outbound email workflows (campaigns, reply c
 metadata:
   author: arnaudjnn
   version: "1.0.0"
-  homepage: https://gtm-engine.sh
+  homepage: https://gtm-tools.sh
 inputs:
   - name: OUTBOUND_TOOLS_URL
     description: Base URL for the outbound-tools server (e.g. https://your-app.railway.app). Required for outbound email operations.
@@ -12,11 +12,8 @@ inputs:
   - name: OUTBOUND_API_KEY
     description: API key for authenticating with the outbound-tools server. Required for outbound email operations.
     required: false
-  - name: GTM_ENGINE_API_KEY
-    description: API key for GTM Engine servers (signals.gtm-engine.sh and socials.gtm-engine.sh). Obtain one via the get_api_key tool on gtm-engine.sh (see setup sub-skill).
-    required: false
   - name: GTM_TOOLS_API_KEY
-    description: API key for api.gtm-tools.sh. Required for the reddit sub-skill. Obtain one via the get_api_key tool on gtm-tools.sh or `gtm-tools admin login` from the CLI.
+    description: API key for api.gtm-tools.sh. Required for the signals, socials, and reddit sub-skills. Obtain one via the get_api_key tool on gtm-tools.sh or `gtm-tools admin login` from the CLI.
     required: false
   - name: MAILPOOL_API_KEY
     description: Mailpool API key for deploying the outbound-tools server on Railway. Only needed during setup.
@@ -66,6 +63,5 @@ Just ask: "Set up GTM skills." or run `/setup`.
 
 - [mailpool.io](https://mailpool.io): Email infrastructure for outbound workflows
 - [outbound-tools](https://github.com/arnaudjnn/outbound-tools): Outbound email server (self-hosted on Railway)
-- [gtm-engine.sh](https://gtm-engine.sh): Admin server for authentication and billing
-- [signals.gtm-engine.sh](https://signals.gtm-engine.sh): Hosted server for buying signal detection
-- [socials.gtm-engine.sh](https://socials.gtm-engine.sh): Hosted server for LinkedIn social intelligence
+- [gtm-tools.sh](https://gtm-tools.sh): Docs + auth/billing
+- [api.gtm-tools.sh](https://api.gtm-tools.sh): Unified API server — signals, socials (LinkedIn), and reddit endpoints all live here
