@@ -15,6 +15,7 @@ Install the whole bundle, or any single skill by name:
 npx skills add arnaudjnn/gtm-skills
 
 # Install a single skill
+npx skills add arnaudjnn/gtm-skills --skill gtm-tools
 npx skills add arnaudjnn/gtm-skills --skill outbound-sales
 npx skills add arnaudjnn/gtm-skills --skill linkedin-copywriter
 npx skills add arnaudjnn/gtm-skills --skill reddit-community-manager
@@ -31,6 +32,7 @@ Or via Claude Code's plugin marketplace (uses `.claude-plugin/marketplace.json`)
 
 | Skill | Description | Source |
 |---|---|---|
+| [`gtm-tools`](./skills/gtm-tools) | **Start here.** Base capability skill: get an API key (including autonomous `auth.md` self-registration), connect the browser-session pool, then call all 63 LinkedIn / Reddit / email / signal / geocoding tools. Carries the full tool catalog with token costs, the metering rules (what a failed call costs), and the error contract. | `./skills/gtm-tools` |
 | [`outbound-sales`](./skills/outbound-sales) | Signal-keyed B2B outbound. Run buying-intent signals on target domains, map each firing signal to a message angle + title filter, find the decision-maker, verify the email, and draft both a cold email AND a LinkedIn DM keyed to the signal. Returns structured drafts in a tool-agnostic format ready to paste into Apollo / Outreach / Salesloft / Lemlist / Smartlead / your CRM. **Does not send** — handoff only. | `./skills/outbound-sales` |
 | [`linkedin-copywriter`](./skills/linkedin-copywriter) | Ghostwrite LinkedIn posts, comments, connection-request notes, and DMs in the user's voice without AI tells. Voice ingestion + anti-AI scrub + draft-then-paste, with four modes (post / comment / invitation / dm) and char-limit + banned-word guards. | `./skills/linkedin-copywriter` |
 | [`reddit-community-manager`](./skills/reddit-community-manager) | Reddit community engagement for B2B. Discover relevant threads, qualify posters, draft and post comments that don't read as AI spam, send DMs, follow up. 21 Reddit tools wired into a five-stage loop with the should-I-reply gate, disclosure pattern, no-links rule, and anti-AI-writing scrubber. | `./skills/reddit-community-manager` |
@@ -49,6 +51,7 @@ Skills auto-activate when relevant prompts come in. Examples:
 - "Find Reddit threads about <pain point>" → `reddit-community-manager`
 - "Should I reply to this Reddit post?" → `reddit-community-manager`
 - "DM this Reddit user" → `reddit-community-manager`
+- "Set up gtm-tools" / "how do I get an API key?" / "what's my token balance?" → `gtm-tools`
 
 ## Prerequisites
 
