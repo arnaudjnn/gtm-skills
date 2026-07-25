@@ -239,5 +239,5 @@ Agent flow:
 - Anti-AI scrub list (banned words + phrases): [`references/anti-ai.md`](./references/anti-ai.md)
 - Hook templates (10 patterns): [`references/hooks.md`](./references/hooks.md)
 - Comment templates (7 patterns): [`references/comment-templates.md`](./references/comment-templates.md)
-- gtm-tools LinkedIn docs: https://gtm-tools.sh/documentation/core-concepts/socials-tools
+- gtm-tools LinkedIn docs: https://gtm-tools.sh/socials-tools
 - API: `https://api.gtm-tools.sh/api/v0` — auth via `Authorization: Bearer $GTM_TOOLS_API_KEY`

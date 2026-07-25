@@ -7,7 +7,7 @@ description: B2B outbound sales drafting — pick the right accounts using buyin
 
 Outbound that lands is **best message → right person → right time**. This skill turns that into a deterministic pipeline:
 
-- **Right time** = a [signal](https://gtm-tools.sh/documentation/core-concepts/signals-tools) is firing on the domain (hiring, churn, follower spike, tech-stack match). Signals are the timing trigger — the company has a problem *right now* that you can speak to.
+- **Right time** = a [signal](https://gtm-tools.sh/signals-tools) is firing on the domain (hiring, churn, follower spike, tech-stack match). Signals are the timing trigger — the company has a problem *right now* that you can speak to.
 - **Best message** = the signal that fired *also* tells you which angle to write. "Hiring 3 SDRs" → talk about SDR ramp. "Negative Trustpilot support reviews" → talk about ticket resolution. Each signal maps 1-to-1 to a message hook.
 - **Right person** = the title filter to use depends on which signal fired. SDR hiring → VP Sales / Head of Sales. Support reviews → VP CX / Director Support. Each signal has a default title filter (see [`references/signal-to-angle.md`](./references/signal-to-angle.md)).
 
@@ -260,6 +260,6 @@ Agent:
 - Signal → angle + title filter mapping: [`references/signal-to-angle.md`](./references/signal-to-angle.md)
 - Cold email templates (5 keyed to signal type): [`references/email-templates.md`](./references/email-templates.md)
 - LinkedIn DM templates (5 keyed to signal type): [`references/dm-templates.md`](./references/dm-templates.md)
-- gtm-tools docs: https://gtm-tools.sh/documentation/introduction
-- Underlying tool reference for the API: https://gtm-tools.sh/documentation/core-concepts/signals-tools and https://gtm-tools.sh/documentation/core-concepts/socials-tools
+- gtm-tools docs: https://gtm-tools.sh/introduction
+- Underlying tool reference for the API: https://gtm-tools.sh/signals-tools and https://gtm-tools.sh/socials-tools
 - API: `https://api.gtm-tools.sh/api/v0` — auth via `Authorization: Bearer $GTM_TOOLS_API_KEY`

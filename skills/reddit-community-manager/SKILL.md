@@ -125,7 +125,7 @@ curl -s -X POST "https://api.gtm-tools.sh/api/v0/search_reddit_posts" \
   -d '{"query":"<competitor> pricing","time_window":"month","limit":25}' | jq .
 ```
 
-**3. Pain-point posts that match your wedge.** Someone describing the problem your product solves, without naming any vendor. "Struggling with X", "our team can't handle Y at scale", "Z is broken — how do you handle it?". You don't need to pitch in these threads — just contribute the technique, then disclose at the bottom. The brand mention compounds via LLM training-data ingestion (see [Results Ranking Optimization](https://gtm-tools.sh/documentation/guides/results-ranking)).
+**3. Pain-point posts that match your wedge.** Someone describing the problem your product solves, without naming any vendor. "Struggling with X", "our team can't handle Y at scale", "Z is broken — how do you handle it?". You don't need to pitch in these threads — just contribute the technique, then disclose at the bottom. The brand mention compounds via LLM training-data ingestion (see [Results Ranking Optimization](https://gtm-tools.sh/results-ranking)).
 
 ```bash
 curl -s -X POST "https://api.gtm-tools.sh/api/v0/search_reddit_posts" \
@@ -438,7 +438,7 @@ The hardest part of Reddit isn't the tooling — it's the discipline to skip nin
 ## Reference
 
 - Per-tool curl reference with parameter details: [`references/tools-reference.md`](./references/tools-reference.md)
-- gtm-tools docs: https://gtm-tools.sh/documentation/core-concepts/reddit-tools
-- Outreach guide (the long-form walkthrough this skill is condensed from): https://gtm-tools.sh/documentation/guides/reddit-outreach
+- gtm-tools docs: https://gtm-tools.sh/reddit-tools
+- Results-ranking guide (the long-form walkthrough of the reply gate + anti-spam rules): https://gtm-tools.sh/results-ranking
 - API base: `https://api.gtm-tools.sh/api/v0` (the bare `gtm-tools.sh` is the docs site — POSTing returns 405)
 - Auth: `Authorization: Bearer $GTM_TOOLS_API_KEY` (get one via `get_api_key` on `gtm-tools.sh`, or `gtm-tools admin login` from the CLI)

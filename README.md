@@ -55,7 +55,7 @@ Skills auto-activate when relevant prompts come in. Examples:
 
 ## Prerequisites
 
-- `GTM_TOOLS_API_KEY` set in your environment. Obtain via `get_api_key` at https://gtm-tools.sh or `gtm-tools admin login` from the [`gtm-tools` CLI](https://gtm-tools.sh/documentation/integrations/cli).
+- `GTM_TOOLS_API_KEY` set in your environment. Obtain via `get_api_key` at https://gtm-tools.sh or `gtm-tools admin login` from the [`gtm-tools` CLI](https://gtm-tools.sh/integrations/cli).
 - The [GTM Tools browser extension](https://gtm-tools.sh/extension) connected if you'll use LinkedIn write tools or Reddit write tools (both need a pooled browser session). `outbound-sales`, `linkedin-copywriter`, and `reddit-community-manager` all rely on this for the relevant write paths.
 
 ## License
